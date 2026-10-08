@@ -29,6 +29,7 @@ test('centered property dialogs retain media, edits, keyboard controls and close
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/#/properties');
+  await page.getByRole('button', { name: 'Switch to light mode' }).click();
   const card = page.locator('.modern-property-card').first();
   await card.click();
   await expect(page.getByRole('dialog')).toBeVisible();
@@ -96,7 +97,7 @@ test('mobile property viewers and editors fill the screen with independently scr
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#/properties');
-  await page.getByRole('button', { name: 'Switch to dark mode' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.locator('.modern-property-card').first().click();
   await expectPropertyLayout(page, true);
   const body = page.getByRole('dialog').locator('.drawer-body');

@@ -12,8 +12,12 @@ async function navigate(page, name) {
     .click();
 }
 
-test('theme and monthly targets persist independently of CRM records', async ({ page }) => {
+test('dark mode is the default and saved light mode and targets persist independently of records', async ({
+  page,
+}) => {
   await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.locator('html')).toHaveCSS('color-scheme', 'dark');
   await expect
     .poll(() => page.evaluate(() => Boolean(localStorage.getItem('kws-crm-v1'))))
     .toBe(true);
@@ -22,13 +26,14 @@ test('theme and monthly targets persist independently of CRM records', async ({ 
   const month = await page.locator('input[type="month"]').inputValue();
   await page.getByRole('spinbutton', { name: 'Target for New enquiries', exact: true }).fill('55');
   await page.getByRole('spinbutton', { name: 'Target for Earned fees', exact: true }).fill('42000');
-  await page.getByRole('button', { name: 'Switch to dark mode', exact: true }).click();
+  await page.getByRole('button', { name: 'Switch to light mode', exact: true }).click();
   await expect
     .poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('kws-crm-preferences'))?.theme))
-    .toBe('dark');
+    .toBe('light');
   expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1'))).toBe(workspaceBefore);
   await page.reload();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page.locator('html')).toHaveCSS('color-scheme', 'light');
   await navigate(page, 'Performance');
   await expect(page.locator('input[type="month"]')).toHaveValue(month);
   await expect(
@@ -73,8 +78,8 @@ test('failed storage writes preserve in-memory editing and theme behavior', asyn
     .fill('Unsaved Storage Client');
   await expect(page.locator('.data-table tbody tr')).toHaveCount(1);
   expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1'))).toBe(workspaceBefore);
-  await page.getByRole('button', { name: 'Switch to dark mode', exact: true }).click();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await page.getByRole('button', { name: 'Switch to light mode', exact: true }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   expect(errors).toEqual([]);
 });
 

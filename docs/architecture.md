@@ -77,7 +77,7 @@ Workbook field keys, sheet names, and column letters remain compatible with the 
 
 The record repository exposes `read()` returning `{ workspace, error, raw }`, `load()` returning a validated workspace or throwing, and `save()`. A missing key starts fictional demo records. Unreadable JSON, invalid envelope/record shapes, duplicate IDs, or blocked access open the recovery screen; autosaving is suspended until the user retries successfully or explicitly chooses an empty workspace. Unknown metadata and record fields are retained, and missing module arrays are filled with empty lists.
 
-Failed writes keep the in-memory record state, expose a persistent export/retry banner, and warn on document exit. Preferences fall back to valid settings/targets and report write failure separately. Repositories resolve storage lazily and accept an injectable getter for tests. Existing keys remain `kws-crm-v1` and `kws-crm-preferences`.
+Failed writes keep the in-memory record state, expose a persistent export/retry banner, and warn on document exit. Preferences fall back to valid settings/targets and report write failure separately. Dark mode is the default when no valid theme is saved; an explicit light-mode preference is preserved. Repositories resolve storage lazily and accept an injectable getter for tests. Existing keys remain `kws-crm-v1` and `kws-crm-preferences`.
 
 JSON restoration validates the backup format/version, records, media, and size before confirmation or replacement. Excel import reads namespace-prefixed or default-namespace OOXML, rich/shared strings, numeric zero, and dates. Missing workbook parts and unmatched sheets fail before replacement. Excel and JSZip are loaded on demand; Excel exports omit attachments while JSON backups retain them.
 

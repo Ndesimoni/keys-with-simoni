@@ -15,7 +15,7 @@ export function useWorkspacePreferences(repository = preferencesRepository) {
   }, [settings, repository]);
 
   useEffect(() => {
-    const theme = settings.theme === 'dark' ? 'dark' : 'light';
+    const theme = settings.theme === 'light' ? 'light' : 'dark';
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
   }, [settings.theme]);

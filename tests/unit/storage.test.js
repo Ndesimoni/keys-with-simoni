@@ -59,7 +59,10 @@ test('blocked access to browser storage follows each repository fallback policy'
   const repository = createWorkspaceRepository(blockedStorage);
   assert.equal(repository.read().workspace, null);
   assert.match(repository.read().error, /storage could not be read/);
-  assert.deepEqual(createPreferencesRepository(blockedStorage).load(), { targets: {} });
+  assert.deepEqual(createPreferencesRepository(blockedStorage).load(), {
+    targets: {},
+    theme: 'dark',
+  });
 });
 
 test('write failures are propagated and never replace previously stored payloads', () => {
@@ -112,15 +115,16 @@ test('monthly targets, theme, and additional preferences round-trip unchanged', 
   const updated = { ...repository.load(), theme: 'light' };
   repository.save(updated);
   assert.deepEqual(JSON.parse(storage.getItem('kws-crm-preferences')), updated);
+  assert.deepEqual(repository.load(), updated);
 });
 
-test('missing, malformed, and falsy preferences receive independent default targets', () => {
-  for (const raw of [null, '', 'null', 'false', '{invalid json']) {
+test('missing or invalid preferences default to dark mode with independent targets', () => {
+  for (const raw of [null, '', 'null', 'false', '{invalid json', '{}', '{"theme":"invalid"}']) {
     const storage = memoryStorage([['kws-crm-preferences', raw]]);
     const repository = createPreferencesRepository(() => storage);
     const first = repository.load();
-    assert.deepEqual(first, { targets: {} });
+    assert.deepEqual(first, { targets: {}, theme: 'dark' });
     first.targets.changed = true;
-    assert.deepEqual(repository.load(), { targets: {} });
+    assert.deepEqual(repository.load(), { targets: {}, theme: 'dark' });
   }
 });

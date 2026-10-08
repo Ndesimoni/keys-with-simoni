@@ -182,6 +182,7 @@ test('Leads source filters, themes and navigation stay accessible on mobile', as
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
+  await page.getByRole('button', { name: 'Switch to light mode', exact: true }).click();
   await page.getByRole('button', { name: 'Toggle navigation', exact: true }).click();
   await page
     .locator('.sidebar .nav-item')
@@ -220,6 +221,7 @@ test('More opens extra source filters and closes after selection, outside intera
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#/leads');
+  await page.getByRole('button', { name: 'Switch to light mode', exact: true }).click();
   await page.evaluate(() => {
     const workspace = JSON.parse(localStorage.getItem('kws-crm-v1'));
     workspace.data.Clients.push(

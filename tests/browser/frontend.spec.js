@@ -202,6 +202,7 @@ test('mobile navigation and record dialogs remain keyboard accessible without pa
 }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#/properties');
+  await page.getByRole('button', { name: 'Switch to light mode' }).click();
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
   await expect(page.getByRole('dialog', { name: 'CRM navigation' })).toBeVisible();
   await page.keyboard.press('Escape');

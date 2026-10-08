@@ -6,10 +6,14 @@ export function createPreferencesRepository(getStorage = () => globalThis.localS
     load() {
       try {
         const saved = JSON.parse(getStorage().getItem(PREFERENCE));
-        if (!isObject(saved)) return { targets: {} };
-        return { ...saved, targets: isObject(saved.targets) ? saved.targets : {} };
+        if (!isObject(saved)) return { targets: {}, theme: 'dark' };
+        return {
+          ...saved,
+          targets: isObject(saved.targets) ? saved.targets : {},
+          theme: saved.theme === 'light' ? 'light' : 'dark',
+        };
       } catch {
-        return { targets: {} };
+        return { targets: {}, theme: 'dark' };
       }
     },
 

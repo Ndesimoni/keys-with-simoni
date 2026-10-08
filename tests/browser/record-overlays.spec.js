@@ -7,7 +7,7 @@ test('mobile lead and task overlays keep controls visible, scroll internally and
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#/leads');
-  await page.getByRole('button', { name: 'Switch to dark mode', exact: true }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.locator('.data-table tbody tr').first().click();
   await expectRecordOverlay(page, { fullScreen: true });
   const workspaceBefore = await page.evaluate(() => localStorage.getItem('kws-crm-v1'));

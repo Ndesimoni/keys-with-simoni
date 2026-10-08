@@ -87,9 +87,12 @@ Formatting settings are shared through `.editorconfig` and `.prettierrc.json`. V
 
 Records and property attachments use this browser's local storage. Full JSON backups include photos and floor plans; Excel exports include record fields and reports. The existing storage keys and backup formats are retained.
 
+The CRM starts in dark mode by default. Use the header theme switch to choose light mode; your selection is saved for future visits.
+
 Unreadable saved records open a recovery screen that leaves the original data untouched. Download that data before explicitly replacing it. Failed saves show an export/retry banner; edits stay in memory until saving succeeds. Forms validate input and protect unsaved edits during drawer closing, navigation, and page exit.
 
 The offline edition is documented in [`legacy/offline/README.md`](legacy/offline/README.md). Its independent assets stay outside Vite's production build.
 
 See the [Product guide](docs/product-guide.md) for features and existing production limitations, and [Third-party notices](THIRD_PARTY_NOTICES.md) for bundled library notices.
+
 # keys-with-simoni

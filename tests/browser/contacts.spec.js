@@ -106,6 +106,7 @@ test('contact filters work with keyboard controls on mobile in both themes witho
 }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#/contacts');
+  await page.getByRole('button', { name: 'Switch to light mode' }).click();
   const filters = page.getByRole('group', { name: 'Filter Contacts', exact: true });
   await filters.getByRole('button', { name: 'Landlords', exact: true }).focus();
   await page.keyboard.press('Enter');

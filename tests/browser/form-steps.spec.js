@@ -126,7 +126,7 @@ test('mobile property steps preserve photos and floor plans through review and r
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/#/properties');
-  await page.getByRole('button', { name: 'Switch to dark mode' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.getByRole('button', { name: 'Add property', exact: true }).click();
   const dialog = page.getByRole('dialog');
   const next = dialog.getByRole('button', { name: 'Next', exact: true });
