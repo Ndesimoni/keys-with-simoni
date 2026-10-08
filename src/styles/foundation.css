@@ -1,0 +1,90 @@
+:root {
+  --ink: #1e2e2d;
+  --deep: #132623;
+  --deep2: #1b302d;
+  --muted: #81908d;
+  --muted-dark: #647470;
+  --gold: #bc9765;
+  --gold-light: #e4cda5;
+  --bg: #f6f8f7;
+  --panel: #fff;
+  --line: #e8ecea;
+  --hover: #f8faf9;
+  --radius: 14px;
+  --shadow: 0 4px 22px rgba(28, 50, 45, 0.025);
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--bg);
+  font-family:
+    Manrope,
+    'DM Sans',
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  font-size: 13px;
+  letter-spacing: -0.012em;
+}
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+button {
+  cursor: pointer;
+}
+a {
+  color: inherit;
+}
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(188, 151, 101, 0.35);
+  outline-offset: 2px;
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: -0.045em;
+}
+p {
+  color: #81908d;
+}
+svg {
+  flex-shrink: 0;
+}
+input,
+select,
+textarea {
+  background: #fff;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}

@@ -1,0 +1,26 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start CRM (Vite)",
+      "type": "npm",
+      "script": "dev",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "^(.*)$",
+          "message": 1
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "vite.*ready in|VITE.*ready in|^.*vite.*",
+          "endsPattern": "Local:.*http://localhost:5173/"
+        }
+      },
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    { "label": "Build CRM", "type": "npm", "script": "build", "problemMatcher": [] },
+    { "label": "Run CRM tests", "type": "npm", "script": "test", "problemMatcher": [] }
+  ]
+}
