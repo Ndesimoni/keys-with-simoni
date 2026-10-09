@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/session.js';
 import { saveRecordForm } from './helpers/record-form.js';
 
 test('new multi-section records validate each step, preserve backtracking edits and save only after review', async ({

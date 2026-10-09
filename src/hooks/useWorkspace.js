@@ -5,6 +5,7 @@ import {
   NavigationContext,
   ViewContext,
   ActionsContext,
+  CalendarContext,
 } from '../app/WorkspaceContext.js';
 
 function useRequiredContext(context, name) {
@@ -18,3 +19,4 @@ export const usePreferences = () => useRequiredContext(PreferencesContext, 'useP
 export const useNavigation = () => useRequiredContext(NavigationContext, 'useNavigation');
 export const useWorkspaceView = () => useRequiredContext(ViewContext, 'useWorkspaceView');
 export const useWorkspaceActions = () => useRequiredContext(ActionsContext, 'useWorkspaceActions');
+export const useCalendar = () => useRequiredContext(CalendarContext, 'useCalendar');

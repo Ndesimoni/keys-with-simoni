@@ -1,6 +1,7 @@
 import { Icon } from '../ui/Icon.jsx';
 import { labels } from '../../config/navigation.js';
 import React from 'react';
+import { UserAccount } from '../../features/auth/UserAccount.jsx';
 import {
   useRecords,
   usePreferences,
@@ -71,9 +72,7 @@ function Header() {
           <Icon name="bell" size={20} />
           {summary.dueTasks.length > 0 && <b />}
         </button>
-        <div className="user-button" title="Keys with Simoni">
-          <span>SC</span>
-        </div>
+        <UserAccount />
       </div>
     </header>
   );

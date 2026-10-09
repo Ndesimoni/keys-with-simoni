@@ -11,6 +11,8 @@ import { RecordDetails } from '../features/records/RecordDetails.jsx';
 import { RecordEditor } from '../features/records/RecordEditor.jsx';
 import React from 'react';
 import { WorkspaceProvider } from './WorkspaceProvider.jsx';
+import { SessionProvider } from './SessionProvider.jsx';
+import { RequireSession, SignInRoute, SignOutRoute } from '../features/auth/SessionRoutes.jsx';
 import {
   useRecords,
   useNavigation,
@@ -128,12 +130,16 @@ function WorkspaceLayout() {
 }
 
 const router = createHashRouter([
+  { path: '/sign-in', element: <SignInRoute />, errorElement: <ErrorBoundaryFallback /> },
+  { path: '/sign-out', element: <SignOutRoute />, errorElement: <ErrorBoundaryFallback /> },
   {
     path: '*',
     element: (
-      <WorkspaceProvider>
-        <WorkspaceLayout />
-      </WorkspaceProvider>
+      <RequireSession>
+        <WorkspaceProvider>
+          <WorkspaceLayout />
+        </WorkspaceProvider>
+      </RequireSession>
     ),
     errorElement: <ErrorBoundaryFallback />,
   },
@@ -142,7 +148,9 @@ const router = createHashRouter([
 export default function App() {
   return (
     <ErrorBoundary>
-      <RouterProvider router={router} />
+      <SessionProvider>
+        <RouterProvider router={router} />
+      </SessionProvider>
     </ErrorBoundary>
   );
 }

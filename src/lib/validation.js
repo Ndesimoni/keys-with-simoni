@@ -1,4 +1,5 @@
 import { MODS, schema } from './schema.js';
+import { calendarFields } from '../config/calendar.js';
 
 export const isObject = (value) =>
   value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -19,7 +20,7 @@ export function normalizeWorkspaceData(input) {
   for (const module of Object.keys(MODS)) {
     const records = input[module] ?? [];
     if (!Array.isArray(records)) throw Error(`${module} must contain a list of records.`);
-    const fields = schema(module);
+    const fields = [...schema(module), ...calendarFields(module)];
     const ids = new Set();
     for (const record of records) {
       if (!isObject(record)) throw Error(`${module} contains an invalid record.`);

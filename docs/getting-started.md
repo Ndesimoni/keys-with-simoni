@@ -1,6 +1,6 @@
 # Getting started in VS Code
 
-The active application is a React 18 + Vite project. It includes all 17 workbook screens, light/dark mode, property media, Excel interoperability, and browser-local records.
+The active application is a React 18 + Vite project. It includes 19 screens covering the original workbook and calendar scheduling, light/dark mode, property media, Excel interoperability, and browser-local records.
 
 ## Start the app
 
@@ -10,6 +10,8 @@ The active application is a React 18 + Vite project. It includes all 17 workbook
 4. Run `npm install`.
 5. Run `npm run dev`.
 6. Open <http://localhost:5173>.
+
+Sign in using `aidah@keyswithsimoni.test` or `simoni@keyswithsimoni.test` and the demo password `SimoniDemo2026!`. The two profiles are Admins with full access. These sample emails will be replaced when the real addresses are supplied. See [Frontend sign-in](frontend-sign-in.md) for preview behavior and the future authentication boundary.
 
 Save source changes to see Vite update the browser. For Chrome debugging, choose **Run and Debug → Run CRM in Chrome**. Build and test tasks are available under **Terminal → Run Task**.
 
@@ -57,7 +59,7 @@ Or use an installed Google Chrome:
 PLAYWRIGHT_CHANNEL=chrome npm run test:e2e
 ```
 
-The browser suite automatically starts its own Vite server on port 5174 and stops it afterward. `npm run preview` serves the production build on port 4173.
+The browser suite automatically starts its own Vite server on port 5174 and a Rust calendar service on port 8787, then stops them afterward. Rust 1.89 or later is required. Google credentials are disabled in tests. `npm run preview` serves the production build on port 4173. See [Google Calendar setup](google-calendar.md) to connect a real account.
 
 ## Existing records and backups
 

@@ -8,17 +8,21 @@ The modern React application is the source of truth for development. It uses fea
 index.html
   → src/main.jsx
   → src/app/App.jsx
+  → SessionProvider + hash router
+  → sign-in/sign-out routes, or RequireSession
   → WorkspaceProvider
       → layout components
       → selected feature page
       → record details and editor
 ```
 
-`App.jsx` mounts a React Router hash data router. `FeatureRoutes.jsx` lazy-loads the 18 screens. Hash paths survive refresh and browser back/forward navigation on static hosting without server rewrites. A query passed from global search is retained in the Client desk URL. Feature and root error boundaries provide retry/reload without clearing records.
+`App.jsx` mounts a React Router hash data router. `SessionProvider` manages the frontend demo identity outside workspace state. Signed-out routes render the email/password form before the record repository or Calendar hook mounts. Successful sign-in opens the dashboard. `/#/sign-out` clears only the identity after the router's unsaved-form blocker permits navigation. The tab session stores only a version and admin ID; public demo credentials are matched locally through a replaceable adapter. Both profiles use the same browser-local records and Google connection. This gate does not authenticate real accounts or secure data. See [Frontend sign-in](frontend-sign-in.md).
+
+`FeatureRoutes.jsx` lazy-loads the 19 CRM screens. Hash paths survive refresh and browser back/forward navigation on static hosting without server rewrites. A query passed from global search is retained in the Client desk URL. Feature and root error boundaries provide retry/reload without clearing records.
 
 `features/leads/LeadsPage.jsx` provides a dedicated acquisition view over existing `Clients` records. It shows source totals, campaign references, contact details, and lead stages, with combined source/stage/search filters. Pure selectors retain custom imported values and unrecorded sources. The shared table accepts an explicit column list for this view; the shared client editor retains its section-by-section form and displays lead labels from the current route. No separate lead collection or conversion copy is created: browser storage, linked records, JSON backups, and the 17-sheet workbook retain their existing contracts.
 
-`WorkspaceProvider.jsx` composes five focused contexts. Consumers use only the hooks they need from `hooks/useWorkspace.js`:
+`WorkspaceProvider.jsx` composes six focused contexts. Consumers use only the hooks they need from `hooks/useWorkspace.js`:
 
 | Hook                    | Responsibility                                                  |
 | ----------------------- | --------------------------------------------------------------- |
@@ -27,6 +31,7 @@ index.html
 | `useNavigation()`       | Current section, URL navigation                                 |
 | `useWorkspaceView()`    | Search, filters, pagination, reports, open drawers/menu/toast   |
 | `usePreferences()`      | Theme, targets, preference persistence                          |
+| `useCalendar()`         | Calendar connection, selected calendar, and sync status         |
 
 Context values are memoized. `useRecordActions()` depends on record data and stable state setters, so typing a search or toggling a menu does not recreate the record/action contexts. View state is still grouped; feature-owned local state can be added when a screen needs independent filters.
 
@@ -81,7 +86,9 @@ Failed writes keep the in-memory record state, expose a persistent export/retry 
 
 JSON restoration validates the backup format/version, records, media, and size before confirmation or replacement. Excel import reads namespace-prefixed or default-namespace OOXML, rich/shared strings, numeric zero, and dates. Missing workbook parts and unmatched sheets fail before replacement. Excel and JSZip are loaded on demand; Excel exports omit attachments while JSON backups retain them.
 
-The repositories remain synchronous and browser-local. HTTP integration will need asynchronous loading/error states and server-side validation. No cross-device or cross-tab synchronization is implemented.
+The repositories remain synchronous and browser-local. `useCalendarSync` observes successfully persisted scheduling metadata and sends desired events to the Rust/Axum calendar companion through `src/services/calendar`. `CalendarContext` supplies connection state, sync results and calendar selection to the Calendar page and record details. Other record repositories still need asynchronous loading/error states for the future shared database. No cross-device CRM or cross-tab record synchronization is implemented.
+
+The companion in `backend/` separates HTTP/OAuth handlers (`api.rs`), Google transport (`google.rs`), validated events and encrypted atomic storage (`store.rs`), and the background retry worker (`sync.rs`). Browser-bound OAuth state/PKCE and CSRF protect authorization and mutations. Queued events, stable event IDs and tokens survive service restarts in an encrypted local store; tokens stay out of the browser. Sync is one-way from CRM to Google, and scoped to explicitly enabled follow-ups/viewings. Client meetings and calls reuse follow-up records. See [Google Calendar integration](google-calendar.md) for setup and the local-only boundary.
 
 ## Styles
 

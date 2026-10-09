@@ -3,16 +3,25 @@ import test from 'node:test';
 import { MODS, schema } from '../../src/lib/schema.js';
 import { errorSectionIndex, recordFormSections } from '../../src/features/records/formSections.js';
 import { validateRecordSection } from '../../src/features/records/validation.js';
+import { calendarFields } from '../../src/config/calendar.js';
 
 test('form sections retain every editable workbook field exactly once and keep the ID first', () => {
-  const longForms = ['Clients', 'Properties', 'Deals', 'Interaction log', 'Client care'];
+  const longForms = [
+    'Clients',
+    'Properties',
+    'Deals',
+    'Interaction log',
+    'Client care',
+    'Follow-ups',
+    'Viewings',
+  ];
   for (const module of Object.keys(MODS)) {
     const editable = schema(module).filter((field) => !field.calculated);
     const sections = recordFormSections(module);
     const fields = sections.flatMap((section) => section.fields);
     assert.deepEqual(
       fields.map((field) => field.key).sort(),
-      editable.map((field) => field.key).sort(),
+      [...editable, ...calendarFields(module)].map((field) => field.key).sort(),
     );
     assert.equal(new Set(fields.map((field) => field.key)).size, fields.length);
     assert.equal(sections[0].fields[0].key, editable[0].key);

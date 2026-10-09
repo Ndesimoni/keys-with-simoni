@@ -11,6 +11,7 @@ import React, { useId } from 'react';
 import { Drawer } from '../../components/ui/Drawer.jsx';
 import { safeExternalUrl } from '../../lib/validation.js';
 import { useNavigation } from '../../hooks/useWorkspace.js';
+import { RecordSchedule } from '../calendar/RecordSchedule.jsx';
 
 function RecordDetails({ detail, data, edit, remove, close }) {
   const { module, record: r } = detail;
@@ -45,6 +46,9 @@ function RecordDetails({ detail, data, edit, remove, close }) {
         </button>
       </div>
       <div className="drawer-body">
+        {['Follow-ups', 'Viewings'].includes(module) && (
+          <RecordSchedule module={module} record={r} data={data} />
+        )}
         {module === 'Properties' && (
           <div className="property-detail-studio">
             <PropertyGallery

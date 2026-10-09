@@ -4,6 +4,7 @@ import { useWorkspacePreferences } from '../hooks/useWorkspacePreferences.js';
 import { useWorkspaceNavigation } from '../hooks/useWorkspaceNavigation.js';
 import { useWorkspaceViewState } from '../hooks/useWorkspaceViewState.js';
 import { useRecordActions } from '../hooks/useRecordActions.js';
+import { useCalendarSync } from '../hooks/useCalendarSync.js';
 import { selectWorkspaceSummary } from '../lib/workspace.js';
 import { StorageRecovery } from '../components/ui/StorageRecovery.jsx';
 import {
@@ -12,6 +13,7 @@ import {
   NavigationContext,
   ViewContext,
   ActionsContext,
+  CalendarContext,
 } from './WorkspaceContext.js';
 
 export function WorkspaceProvider({ children }) {
@@ -19,7 +21,13 @@ export function WorkspaceProvider({ children }) {
   const preferences = useWorkspacePreferences();
   const navigation = useWorkspaceNavigation();
   const view = useWorkspaceViewState(navigation.route, navigation.initialQuery);
-  const actions = useRecordActions(workspace, view, navigation.navigate);
+  const calendar = useCalendarSync(workspace);
+  const actions = useRecordActions(
+    workspace,
+    view,
+    navigation.navigate,
+    Boolean(calendar.status.connected && calendar.status.calendar),
+  );
   const summary = useMemo(() => selectWorkspaceSummary(workspace.data), [workspace.data]);
   const records = useMemo(
     () => ({
@@ -56,7 +64,9 @@ export function WorkspaceProvider({ children }) {
       <PreferencesContext.Provider value={preferenceValue}>
         <NavigationContext.Provider value={navigation}>
           <ViewContext.Provider value={view}>
-            <ActionsContext.Provider value={actions}>{children}</ActionsContext.Provider>
+            <ActionsContext.Provider value={actions}>
+              <CalendarContext.Provider value={calendar}>{children}</CalendarContext.Provider>
+            </ActionsContext.Provider>
           </ViewContext.Provider>
         </NavigationContext.Provider>
       </PreferencesContext.Provider>

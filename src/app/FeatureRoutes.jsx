@@ -7,6 +7,7 @@ import { useNavigation } from '../hooks/useWorkspace.js';
 
 const page = (loader, name) => lazy(() => loader().then((module) => ({ default: module[name] })));
 const screens = {
+  Calendar: page(() => import('../features/calendar/CalendarPage.jsx'), 'CalendarPage'),
   Dashboard: page(() => import('../features/dashboard/DashboardPage.jsx'), 'DashboardPage'),
   'CRM insights': page(() => import('../features/insights/InsightsPage.jsx'), 'InsightsPage'),
   'Client desk': page(() => import('../features/clients/ClientDeskPage.jsx'), 'ClientDeskPage'),

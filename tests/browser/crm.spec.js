@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/session.js';
 import { readFile } from 'node:fs/promises';
 import JSZip from 'jszip';
 import { labels, nav } from '../../src/config/navigation.js';
@@ -83,11 +83,11 @@ test('failed storage writes preserve in-memory editing and theme behavior', asyn
   expect(errors).toEqual([]);
 });
 
-test('all 18 screens render and the original workbook is served', async ({ page }) => {
+test('all 19 screens render and the original workbook is served', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/');
-  await expect(page.locator('.sidebar .nav-item')).toHaveCount(18);
+  await expect(page.locator('.sidebar .nav-item')).toHaveCount(19);
   for (const name of nav.flatMap((group) => group.items.map(([label]) => label))) {
     await navigate(page, name);
     await expect(page.locator('.page-heading h1')).toHaveText(labels[name]);

@@ -4,7 +4,13 @@ import { normalizeRecord, validateRecord } from './validation.js';
 
 export function saveWorkspaceRecord(workspace, module, record, original) {
   const normalized = normalizeRecord(module, record);
-  const errors = validateRecord(module, normalized, workspace.data[module], original);
+  const errors = validateRecord(
+    module,
+    normalized,
+    workspace.data[module],
+    original,
+    workspace.data,
+  );
   if (Object.keys(errors).length) return { errors };
   const id = schema(module)[0].key;
   const records = original

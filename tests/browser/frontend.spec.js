@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/session.js';
 import { readFile } from 'node:fs/promises';
 import JSZip from 'jszip';
 import { schema } from '../../src/lib/schema.js';

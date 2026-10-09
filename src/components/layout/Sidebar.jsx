@@ -5,8 +5,10 @@ import React from 'react';
 import { useNavigation, useWorkspaceView } from '../../hooks/useWorkspace.js';
 import { useMediaQuery } from '../../hooks/useMediaQuery.js';
 import { Drawer } from '../ui/Drawer.jsx';
+import { useSession } from '../../hooks/useSession.js';
 
 function Sidebar() {
+  const { user } = useSession();
   const { route, navigate } = useNavigation();
   const { mobileNav, setMobileNav } = useWorkspaceView();
   const isMobile = useMediaQuery('(max-width: 1050px)');
@@ -65,10 +67,10 @@ function Sidebar() {
           </button>
         </div>
         <div className="side-footer">
-          <span className="footer-avatar">SC</span>
+          <span className="footer-avatar">{user.name.slice(0, 1).toUpperCase()}</span>
           <div>
-            <strong>Keys with Simoni</strong>
-            <small>Independent workspace</small>
+            <strong>{user.name}</strong>
+            <small>{user.role} · Full access</small>
           </div>
           <Icon name="shield" size={17} />
         </div>

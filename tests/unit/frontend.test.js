@@ -250,9 +250,10 @@ test('date search uses inclusive boundaries, chronological order and explicit in
   assert.equal(data.Clients[0].client_id, 'CL-2');
 });
 
-test('all 18 sections have unique stable routes and external links accept only web URLs', () => {
-  assert.equal(routes.length, 18);
-  assert.equal(new Set(routes.map((route) => route.path)).size, 18);
+test('all 19 sections have unique stable routes and external links accept only web URLs', () => {
+  assert.equal(routes.length, 19);
+  assert.equal(new Set(routes.map((route) => route.path)).size, 19);
+  assert.equal(routePath('Calendar'), '/calendar');
   assert.equal(routePath('Leads'), '/leads');
   for (const route of routes) assert.equal(routeName(routePath(route.name)), route.name);
   assert.equal(routeName('/unknown'), 'Page not found');

@@ -1,6 +1,11 @@
 import React from 'react';
 
 const icons = {
+  logout: (
+    <>
+      <path d="M9 4H4v16h5M9 12h12m-4-4 4 4-4 4" />
+    </>
+  ),
   grid: (
     <>
       <rect x="3" y="3" width="7" height="7" rx="1" />

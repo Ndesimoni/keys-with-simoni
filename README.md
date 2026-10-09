@@ -13,6 +13,8 @@ npm run dev
 
 Open <http://localhost:5173>. See [Getting started](docs/getting-started.md) for the VS Code setup.
 
+The frontend opens with email/password sign-in. Use `aidah@keyswithsimoni.test` or `simoni@keyswithsimoni.test` with the public demo password `SimoniDemo2026!`. Both profiles have full Admin access. These are preview credentials; real authentication and shared records require the backend. See [Frontend sign-in](docs/frontend-sign-in.md).
+
 ## Project structure
 
 ```text
@@ -24,6 +26,8 @@ src/
   config/               Navigation, field options, theme, and storage constants
   data/                 Original workbook schemas and fictional demo records
   features/
+    auth/               Frontend sign-in, session routes, and admin profile controls
+    calendar/           Scheduling, Google connection, and sync status
     clients/            Client desk and property matching
     dashboard/          Overview and KPIs
     guide/              In-app workflow guide
@@ -34,6 +38,7 @@ src/
   hooks/                Focused state access, actions, navigation, and persistence
   lib/                  Business rules, workspace selectors, media, and Excel
   services/
+    auth/               Demo credential adapter, replaceable with server authentication
     files/              Backup validation and browser downloads
     storage/            Browser workspace and preference repositories
   styles/               Ordered foundation, workspace, responsive, theme, and media styles
@@ -47,11 +52,12 @@ tests/
 scripts/                Offline build script
 docs/                   Setup, architecture, product guide, and screenshots
 legacy/offline/         Preserved independent offline prototype
+backend/                Rust/Axum Google Calendar companion
 ```
 
 The active application starts in [`src/app/App.jsx`](src/app/App.jsx). Read [Architecture](docs/architecture.md) before adding a feature.
 
-The [Architecture audit](docs/architecture-audit.md) preserves the initial findings. [Frontend completion](docs/frontend-completion.md) records the implemented foundations and validation results. All 18 screens have reload-safe hash routes, such as `/#/properties`, with browser back/forward support. The Leads section at `/#/leads` shows contact details, lead sources, campaign references, and enquiry stages, with source totals and filters. Five source filters appear initially, including All sources; More opens a menu of the remaining choices. Selecting a source, clicking outside, pressing Escape, or using its close button dismisses the menu and keeps More available. The active source stays visible among the five filters. Leads share their existing client profile, so updates stay connected to follow-ups, deals, and the original 17-sheet Excel export.
+The [Architecture audit](docs/architecture-audit.md) preserves the initial findings. [Frontend completion](docs/frontend-completion.md) records the implemented foundations and validation results. All 19 screens have reload-safe hash routes, such as `/#/properties`, with browser back/forward support. The Leads section at `/#/leads` shows contact details, lead sources, campaign references, and enquiry stages, with source totals and filters. Five source filters appear initially, including All sources; More opens a menu of the remaining choices. Selecting a source, clicking outside, pressing Escape, or using its close button dismisses the menu and keeps More available. The active source stays visible among the five filters. Leads share their existing client profile, so updates stay connected to follow-ups, deals, and the original 17-sheet Excel export.
 
 ## Commands
 
@@ -68,7 +74,7 @@ The [Architecture audit](docs/architecture-audit.md) preserves the initial findi
 | `npm run offline`       | Serve the preserved offline edition on port 4173            |
 | `npm run build:offline` | Rebuild the offline edition from its separate source        |
 
-For browser tests, install Playwright's Chromium once:
+The browser suite requires Rust 1.89 or later. It starts the local Calendar service automatically with Google credentials disabled. Install Playwright's Chromium once:
 
 ```bash
 npx playwright install chromium
@@ -88,6 +94,8 @@ Formatting settings are shared through `.editorconfig` and `.prettierrc.json`. V
 Records and property attachments use this browser's local storage. Full JSON backups include photos and floor plans; Excel exports include record fields and reports. The existing storage keys and backup formats are retained.
 
 The CRM starts in dark mode by default. Use the header theme switch to choose light mode; your selection is saved for future visits.
+
+The Calendar section combines follow-ups, viewings, meetings and calls. It can automatically sync enabled activities to Google Calendar through the Rust service in `backend/`. See [Google Calendar setup](docs/google-calendar.md) to configure your Google account, run the service with `npm run dev:calendar`, and choose a calendar. Scheduling works locally before Google is connected. Full JSON backups retain scheduling fields; Excel keeps the original workbook format.
 
 Unreadable saved records open a recovery screen that leaves the original data untouched. Download that data before explicitly replacing it. Failed saves show an export/retry banner; edits stay in memory until saving succeeds. Forms validate input and protect unsaved edits during drawer closing, navigation, and page exit.
 

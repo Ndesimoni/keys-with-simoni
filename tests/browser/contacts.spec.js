@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/session.js';
 
 const contacts = [
   ...Array.from({ length: 13 }, (_, index) => ({

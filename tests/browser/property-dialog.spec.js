@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/session.js';
 import { saveRecordForm } from './helpers/record-form.js';
 
 async function expectPropertyLayout(page, fullScreen = false) {

@@ -1,4 +1,5 @@
 import { schema } from '../../lib/schema.js';
+import { calendarFields } from '../../config/calendar.js';
 
 const section = (id, title, keys, media = false) => ({ id, title, keys, media });
 
@@ -181,7 +182,10 @@ const layouts = {
 
 /** Resolve workbook fields once each, including future fields without silently dropping them. */
 export function recordFormSections(module) {
-  const fields = schema(module).filter((field) => !field.calculated);
+  const scheduleDate =
+    module === 'Follow-ups' ? 'due_date' : module === 'Viewings' ? 'appointment_date_time' : null;
+  const editable = schema(module).filter((field) => !field.calculated);
+  const fields = editable.filter((field) => field.key !== scheduleDate);
   const byKey = new Map(fields.map((field) => [field.key, field]));
   const sections = (layouts[module] || []).map(({ keys, ...definition }) => ({
     ...definition,
@@ -200,6 +204,17 @@ export function recordFormSections(module) {
       media: false,
     });
   }
+  const scheduling = [
+    ...editable.filter((field) => field.key === scheduleDate),
+    ...calendarFields(module),
+  ];
+  if (scheduling.length)
+    sections.push({
+      id: 'schedule',
+      title: 'Scheduling & Google Calendar',
+      fields: scheduling,
+      media: false,
+    });
   return sections;
 }
 

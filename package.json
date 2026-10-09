@@ -6,6 +6,8 @@
   "description": "Premium React front-end converting the 17-tab Keys with Simoni real estate workbook into a functioning CRM",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
+    "dev:calendar": "cd backend && cargo run --locked",
+    "test:calendar": "cargo test --locked --manifest-path backend/Cargo.toml",
     "build": "vite build",
     "preview": "vite preview",
     "offline": "python3 -m http.server 4173 --directory legacy/offline/public",

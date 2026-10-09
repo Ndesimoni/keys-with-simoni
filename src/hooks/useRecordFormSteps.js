@@ -2,7 +2,15 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { errorSectionIndex, recordFormSections } from '../features/records/formSections.js';
 import { validateRecord, validateRecordSection } from '../features/records/validation.js';
 
-export function useRecordFormSteps({ module, form, records, original, initialSection, busy }) {
+export function useRecordFormSteps({
+  module,
+  form,
+  records,
+  original,
+  initialSection,
+  busy,
+  data,
+}) {
   const sections = useMemo(() => recordFormSections(module), [module]);
   const multiStep = sections.length > 1;
   const steps = useMemo(
@@ -51,7 +59,7 @@ export function useRecordFormSteps({ module, form, records, original, initialSec
   const validateCurrent = () => {
     if (review) return true;
     const fields = sections[activeStep].fields;
-    const validation = validateRecordSection(module, form, records, original, fields);
+    const validation = validateRecordSection(module, form, records, original, fields, data);
     setErrors((previous) => {
       const next = { ...previous };
       fields.forEach((field) => delete next[field.key]);
@@ -75,7 +83,7 @@ export function useRecordFormSteps({ module, form, records, original, initialSec
     moveTo(index);
   };
   const validateAll = () => {
-    const validation = validateRecord(module, form, records, original);
+    const validation = validateRecord(module, form, records, original, data);
     reportErrors(validation);
     return !Object.keys(validation).length;
   };

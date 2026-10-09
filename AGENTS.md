@@ -19,6 +19,7 @@ Professional real estate CRM focused on the UAE market.
 ## Technology
 
 - React 18 and Vite
+- Rust/Axum for the local Google Calendar companion
 - JavaScript and CSS
 - Browser-local storage for current MVP
 - Excel import/export
@@ -26,7 +27,7 @@ Professional real estate CRM focused on the UAE market.
 
 ## Existing Features
 
-- 18 CRM screens covering the original 17-sheet workbook
+- 19 CRM screens covering the original 17-sheet workbook plus calendar scheduling
 - Dashboard and analytics
 - Client and lead management
 - Properties for sale and rent
@@ -35,8 +36,10 @@ Professional real estate CRM focused on the UAE market.
 - Property photos, floor plans and amenities
 - Lead qualification and scoring
 - Follow-ups and viewing management
+- Google Calendar integration through a local Rust/Axum companion
 - Deals, commissions and expenses
 - Light and dark mode
+- Frontend email/password sign-in preview for Aidah and Simoni, both Admins
 - Responsive desktop/mobile interface
 
 ## Current Project Structure
@@ -55,6 +58,8 @@ Professional real estate CRM focused on the UAE market.
 - src/main.jsx — React entry point
 - tests/ — Active unit, storage contract, browser, and offline smoke checks
 - docs/architecture-audit.md — Architecture findings and staged refactoring plan
+- backend/ — Local Rust/Axum Google Calendar authorization, encrypted queue, and sync worker
+- docs/google-calendar.md — Account setup, syncing behavior, and integration verification
 
 ## Engineering Standards
 
@@ -72,7 +77,7 @@ Act as a senior software engineer and UI/UX designer.
 
 ## Roadmap
 
-The frontend foundations are implemented; see `docs/frontend-completion.md`. Node 20 or later is required by the patched router dependency. The Rust/PostgreSQL backend remains the next phase.
+The frontend foundations are implemented; see `docs/frontend-completion.md`. Node 20 or later is required by the patched router dependency. Calendar integration uses a local Rust companion (Rust 1.89+); the shared PostgreSQL CRM, application authentication and hosted backend remain the next phase. Verify calendar changes with `npm run test:calendar`, browser checks, `cargo fmt`, and Clippy in addition to the standard checks. Browser tests start both Vite and the calendar service and force empty Google credentials.
 
 1. Refactor monolithic React components.
 2. Improve property-management workflows.
@@ -87,5 +92,6 @@ The frontend foundations are implemented; see `docs/frontend-completion.md`. Nod
 ## Important
 
 This is currently a browser-local demo.
+The sign-in screen uses public sample credentials and a tab-local identity, not server authentication. See `docs/frontend-sign-in.md`; never put real passwords into the demo account configuration.
 Do not treat it as a secure multi-user CRM.
 Do not remove existing data features without approval.

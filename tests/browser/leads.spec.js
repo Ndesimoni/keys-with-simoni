@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/session.js';
 import { readFile } from 'node:fs/promises';
 import { saveRecordForm } from './helpers/record-form.js';
 

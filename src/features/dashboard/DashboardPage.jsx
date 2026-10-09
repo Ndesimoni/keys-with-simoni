@@ -276,7 +276,7 @@ function DashboardPage() {
               <div className="mini-quiet">No upcoming viewings yet.</div>
             )}
           </div>
-          <button className="panel-link" onClick={() => navigate('Viewings')}>
+          <button className="panel-link" onClick={() => navigate('Calendar')}>
             Open calendar <Icon name="arrow" size={16} />
           </button>
         </section>

@@ -5,6 +5,7 @@ const nav = [
       ['Dashboard', 'grid'],
       ['Client desk', 'search'],
       ['CRM insights', 'sparkle'],
+      ['Calendar', 'calendar'],
     ],
   },
   {
@@ -36,6 +37,7 @@ const nav = [
 
 const labels = {
   Dashboard: 'Overview',
+  Calendar: 'Calendar & appointments',
   Leads: 'Leads & sources',
   Deals: 'Deals & commissions',
   Clients: 'Clients & requirements',
@@ -56,6 +58,7 @@ const labels = {
 };
 
 const descriptions = {
+  Calendar: 'Schedule follow-ups, viewings, meetings and calls, and connect Google Calendar.',
   Leads: 'Track enquiries, contact details, and where every lead came from.',
   Clients: 'Manage relationships, qualification, budgets, and conversion.',
   Contacts: 'A single record for every landlord, client, owner, developer, and broker.',

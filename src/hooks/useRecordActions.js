@@ -7,11 +7,13 @@ import { normalizeWorkspaceData } from '../lib/validation.js';
 import { removeWorkspaceRecord, saveWorkspaceRecord } from '../features/records/commands.js';
 import { createFullBackup, parseFullBackup } from '../services/files/backup.js';
 import { downloadJson } from '../services/files/download.js';
+import { calendarDefaults } from '../config/calendar.js';
 
 export function useRecordActions(
   { db, data, setDb },
   { setDrawer, setDetail, setToast },
   navigate,
+  calendarConnected = false,
 ) {
   const uploadRef = useRef(null);
   const restoreRef = useRef(null);
@@ -106,7 +108,14 @@ export function useRecordActions(
       setDetail(null);
       setDrawer({
         module,
-        record: { [schema(module)[0].key]: newId(module, data[module]), ...pre },
+        record: {
+          [schema(module)[0].key]: newId(module, data[module]),
+          ...calendarDefaults(module),
+          ...(Object.keys(calendarDefaults(module)).length
+            ? { calendar_enabled: calendarConnected ? 'Yes' : 'No' }
+            : {}),
+          ...pre,
+        },
         original: null,
       });
     };
@@ -147,5 +156,5 @@ export function useRecordActions(
       restoreFullBackup: (event) => readFile(event, false),
       onUpload: (event) => readFile(event, true),
     };
-  }, [db, data, setDb, setDrawer, setDetail, setToast, navigate, fileBusy]);
+  }, [db, data, setDb, setDrawer, setDetail, setToast, navigate, fileBusy, calendarConnected]);
 }

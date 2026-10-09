@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/session.js';
 import { expectRecordOverlay } from './helpers/record-overlay.js';
 
-test('mobile lead and task overlays keep controls visible, scroll internally and protect drafts', async ({
+test('mobile lead and contact overlays keep controls visible, scroll internally and protect drafts', async ({
   page,
 }, testInfo) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -44,11 +44,11 @@ test('mobile lead and task overlays keep controls visible, scroll internally and
   expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1'))).toBe(workspaceBefore);
   expect(await page.evaluate(() => document.body.style.overflow)).toBe('');
 
-  await page.goto('/#/follow-ups');
-  await page.getByRole('button', { name: 'Add follow-up', exact: true }).click();
+  await page.goto('/#/contacts');
+  await page.getByRole('button', { name: 'Add contact', exact: true }).click();
   await expectRecordOverlay(page, { fullScreen: true });
   await expect(dialog.locator('.form-stepper')).toHaveCount(0);
-  await page.screenshot({ path: testInfo.outputPath('task-overlay-mobile-dark.png') });
+  await page.screenshot({ path: testInfo.outputPath('contact-overlay-mobile-dark.png') });
   await page.getByRole('button', { name: 'Cancel', exact: true }).click();
   await page.locator('.data-table tbody tr').first().click();
   await expectRecordOverlay(page, { fullScreen: true });

@@ -1,5 +1,6 @@
 import { schema } from '../../lib/schema.js';
 import { safeExternalUrl } from '../../lib/validation.js';
+import { scheduleErrors } from '../calendar/selectors.js';
 
 export function normalizeRecord(module, record) {
   const normalized = { ...record };
@@ -15,7 +16,7 @@ export function normalizeRecord(module, record) {
   return normalized;
 }
 
-export function validateRecord(module, record, records = [], original = null) {
+export function validateRecord(module, record, records = [], original = null, data) {
   const errors = {};
   const fields = schema(module).filter((field) => !field.calculated);
   const id = fields[0].key;
@@ -59,14 +60,14 @@ export function validateRecord(module, record, records = [], original = null) {
     Number(record.minimum_budget_aed) > Number(record.maximum_budget_aed)
   )
     errors.maximum_budget_aed = 'Maximum budget must be at least the minimum budget.';
-  return errors;
+  return { ...errors, ...scheduleErrors(module, record, data) };
 }
 
 /** Advancing a form checks only the fields shown in its current section. */
-export function validateRecordSection(module, record, records, original, fields) {
+export function validateRecordSection(module, record, records, original, fields, data) {
   const keys = new Set(fields.map((field) => field.key));
   return Object.fromEntries(
-    Object.entries(validateRecord(module, record, records, original)).filter(([key]) =>
+    Object.entries(validateRecord(module, record, records, original, data)).filter(([key]) =>
       keys.has(key),
     ),
   );

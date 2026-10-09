@@ -48,6 +48,7 @@ function RecordEditor({ drawer, data, onClose, onSave }) {
     original,
     initialSection: drawer.initialSection,
     busy: uploading,
+    data,
   });
   const change = (key, v) => {
     setErrors((previous) => ({ ...previous, [key]: '' }));
@@ -55,6 +56,9 @@ function RecordEditor({ drawer, data, onClose, onSave }) {
     setForm((p) => ({
       ...p,
       [key]: v,
+      ...(module === 'Follow-ups' && key === 'calendar_start' && v
+        ? { due_date: v.slice(0, 10) }
+        : {}),
       ...(module === 'Properties' && key === 'sale_rental'
         ? {
             price_basis:
@@ -112,7 +116,9 @@ function RecordEditor({ drawer, data, onClose, onSave }) {
                       'Client care': 'touchpoint',
                       'Interaction log': 'conversation',
                       Shortlist: 'match',
-                      'Follow-ups': 'follow-up',
+                      'Follow-ups': ['Call', 'Meeting'].includes(form.calendar_activity)
+                        ? form.calendar_activity.toLowerCase()
+                        : 'follow-up',
                     }[module] || module.toLowerCase().replace(/s$/, ''))}
           </h2>
           <p>
@@ -184,6 +190,13 @@ function RecordEditor({ drawer, data, onClose, onSave }) {
                   uploading={uploading}
                   setUploading={setUploading}
                 />
+              )}
+              {currentSection.id === 'schedule' && (
+                <p className="form-intro">
+                  Times use Dubai time (UTC+4). Date-only follow-ups appear as all-day reminders.
+                  Enable sync to add this activity to your connected calendar. Invitations are sent
+                  only when you choose Yes.
+                </p>
               )}
               <section className="form-section" aria-labelledby={stepTitleId}>
                 <div className="form-grid">

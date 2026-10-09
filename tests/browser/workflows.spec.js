@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from './helpers/session.js';
 import { MODS, schema } from '../../src/lib/schema.js';
 import { routePath } from '../../src/config/routes.js';
 import { saveRecordForm } from './helpers/record-form.js';
