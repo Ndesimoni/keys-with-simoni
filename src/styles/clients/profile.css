@@ -1,0 +1,75 @@
+.desk-body {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+.profile-hero {
+  padding: 25px;
+}
+.profile-head {
+  display: flex;
+  gap: 17px;
+  align-items: center;
+}
+.big-avatar {
+  width: 59px;
+  height: 59px;
+  border-radius: 15px;
+  background: linear-gradient(140deg, #dac1a0, #a88a6c);
+  color: white;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+}
+.profile-head > div {
+  flex: 1;
+}
+.eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.13em;
+  color: #b39569;
+  font-weight: 800;
+}
+.profile-head h2 {
+  font-size: 22px;
+  color: #31493c;
+  margin: 5px 0 8px;
+}
+.profile-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: #9daaa0;
+  font-size: 10px;
+}
+.profile-meta > span {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.profile-stats {
+  border-top: 1px solid #ecf0eb;
+  padding-top: 23px;
+  margin-top: 23px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 17px;
+}
+.label-value {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.label-value span {
+  color: #9aa69d;
+  font-size: 10px;
+}
+.label-value strong {
+  font-size: 11px;
+  color: #364e3e;
+}
+.mini-count {
+  color: #ab8f63;
+  font-size: 10px;
+  font-weight: 800;
+}

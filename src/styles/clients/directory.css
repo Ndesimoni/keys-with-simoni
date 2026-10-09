@@ -1,0 +1,89 @@
+.desk-layout {
+  display: grid;
+  grid-template-columns: 282px 1fr;
+  gap: 17px;
+  align-items: start;
+}
+.desk-list {
+  padding: 20px 13px;
+  position: sticky;
+  top: 96px;
+}
+.desk-list-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 7px;
+}
+.desk-list-title h3 {
+  margin: 0 0 15px;
+  font-size: 14px;
+}
+.desk-list-title span {
+  color: #9aa79d;
+  font-size: 10px;
+}
+.desk-search {
+  margin: 0 4px 11px;
+  min-width: auto;
+}
+.desk-clients {
+  max-height: 490px;
+  overflow: auto;
+  padding-bottom: 10px;
+}
+.desk-client {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  padding: 12px 9px;
+  border: 0;
+  border-radius: 9px;
+  background: #fff;
+  text-align: left;
+}
+.desk-client.selected {
+  background: #ecf2ec;
+}
+.desk-client > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 5px;
+  min-width: 0;
+}
+.desk-client strong,
+.client-mini strong {
+  font-size: 10.5px;
+  color: #435b4e;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.desk-client small,
+.client-mini small {
+  font-size: 9.5px;
+  color: #98a69c;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.desk-client > svg {
+  color: #a9b6a9;
+}
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: #eaded0;
+  color: #a5815a;
+  font-size: 10px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.desk-list > .btn {
+  margin-top: 12px;
+}

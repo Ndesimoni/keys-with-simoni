@@ -1,0 +1,79 @@
+.chart-total {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: -3px 0 7px;
+}
+.chart-total strong {
+  font-size: 25px;
+  color: #31473a;
+  letter-spacing: -0.05em;
+}
+.chart-total > span {
+  font-size: 10px;
+  color: #a2aaa6;
+}
+.column-chart {
+  height: 154px;
+  border-bottom: 1px solid #edf0ed;
+  display: flex;
+  justify-content: space-around;
+  gap: 14px;
+  padding: 10px 8px 0;
+}
+.column-group {
+  flex: 1;
+  max-width: 60px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.column-space {
+  height: 115px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border-bottom: 1px solid #eaece9;
+}
+.column-bar {
+  background: #d4d9d1;
+  width: 50%;
+  min-width: 13px;
+  max-width: 32px;
+  border-radius: 5px 5px 0 0;
+  transition: 0.2s;
+}
+.column-bar.last {
+  background: #678f7e;
+}
+.column-group small {
+  color: #a1aaa6;
+  font-size: 9px;
+}
+.mini-insights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 18px 0 -2px;
+}
+.mini-insights > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 15px;
+}
+.mini-insights > div + div {
+  border-left: 1px solid #eff1ee;
+  padding-left: 18px;
+}
+.mini-insights span {
+  color: #9aa5a0;
+  font-size: 9px;
+}
+.mini-insights strong {
+  color: #344e41;
+  font-size: 13px;
+  letter-spacing: -0.03em;
+}

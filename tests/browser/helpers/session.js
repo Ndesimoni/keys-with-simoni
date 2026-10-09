@@ -13,13 +13,13 @@ export const test = base.extend({
   page: async ({ page }, use) => {
     await page.goto('/#/sign-in');
     const before = await page.evaluate(() => ({
-      records: localStorage.getItem('kws-crm-v1'),
+      records: localStorage.getItem('kws-crm-v1:workspace:aidah'),
       preferences: localStorage.getItem('kws-crm-preferences'),
     }));
     await signIn(page);
     await page.evaluate((saved) => {
       for (const [key, value] of [
-        ['kws-crm-v1', saved.records],
+        ['kws-crm-v1:workspace:aidah', saved.records],
         ['kws-crm-preferences', saved.preferences],
       ]) {
         if (value === null) localStorage.removeItem(key);

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '../../components/ui/Button.jsx';
 import { formatValue } from '../../lib/crm.js';
 import { mediaPhotos, mediaPlans } from '../../lib/media.js';
+import { OverflowList } from '../../components/ui/OverflowList.jsx';
 
 export function RecordReview({ module, form, data, sections, onEdit }) {
   return (
@@ -35,15 +36,16 @@ export function RecordReview({ module, form, data, sections, onEdit }) {
                   {plans.length === 1 ? '' : 's'}
                 </p>
                 {!!photos.length && (
-                  <div className="review-photo-list">
-                    {photos.map((photo, photoIndex) => (
-                      <img
-                        key={photoIndex}
-                        src={photo.src}
-                        alt={`Property photo ${photoIndex + 1}`}
-                      />
-                    ))}
-                  </div>
+                  <OverflowList
+                    mode="scroll"
+                    className="photo-strip"
+                    items={photos}
+                    label="Reviewed property photos"
+                    listClassName="review-photo-list"
+                    renderItem={(photo, photoIndex) => (
+                      <img src={photo.src} alt={`Property photo ${photoIndex + 1}`} />
+                    )}
+                  />
                 )}
                 {!!plans.length && (
                   <ul>

@@ -1,0 +1,71 @@
+html {
+  scroll-padding-top: 88px;
+  scrollbar-color: var(--muted) var(--bg);
+  scrollbar-width: thin;
+}
+:root[data-theme]
+  :is(
+    .nav-groups,
+    .drawer-body,
+    .overflow-list-scroll,
+    .table-scroll,
+    .tabs,
+    .form-step-list,
+    .media-photo-thumbs
+  ) {
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted) transparent;
+}
+:root[data-theme] :is(.drawer-body, .overflow-list-scroll, .message-recipient-results) {
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+}
+:root[data-theme] :is(button, a, input, select, textarea) {
+  transition:
+    background-color var(--duration) var(--ease),
+    border-color var(--duration) var(--ease),
+    color var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
+}
+:root[data-theme] :is(button, a):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+:root[data-theme] :is(input, select, textarea):focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+:root[data-theme]
+  :is(.btn, .theme-switch, .purpose-pill, .view-switch button):active:not(:disabled) {
+  filter: brightness(0.95);
+  transform: none;
+}
+:root[data-theme] .modern-property-card {
+  transition:
+    border-color var(--duration) var(--ease),
+    box-shadow var(--duration) var(--ease);
+}
+:root[data-theme] :is(.column-bar, .bar-track > div, .goal-track > div) {
+  transition:
+    height 240ms var(--ease),
+    width 240ms var(--ease);
+}
+.filter-toggle-chevron {
+  transition: transform var(--duration) var(--ease);
+}
+:root[data-theme] .modal-centered > .drawer {
+  animation: modal-enter var(--duration) var(--ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

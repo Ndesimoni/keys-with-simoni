@@ -1,0 +1,182 @@
+.workspace-banner {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  margin-bottom: 22px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  color: var(--ink);
+}
+.workspace-banner > svg {
+  flex-shrink: 0;
+  color: var(--gold);
+}
+.workspace-banner > div {
+  flex: 1;
+  min-width: 0;
+}
+.workspace-banner span {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+.workspace-banner strong {
+  display: block;
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.workspace-banner p {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.workspace-directory,
+.activity-panel {
+  padding: 24px;
+}
+.workspace-directory-heading,
+.workspace-card-top,
+.activity-entry-heading {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
+}
+.workspace-directory-heading {
+  margin-bottom: 20px;
+}
+.workspace-directory-heading h2,
+.workspace-card h3 {
+  margin: 0;
+}
+.workspace-directory-heading p,
+.workspace-card-top p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+.workspace-directory > .search-small {
+  margin-bottom: 20px;
+  max-width: 420px;
+}
+.workspace-card-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.workspace-card {
+  height: 100%;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+}
+.workspace-card-counts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.workspace-card-counts dt {
+  font-size: 12px;
+  color: var(--muted);
+}
+.workspace-card-counts dd {
+  margin: 4px 0 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+.activity-filters {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.activity-filters label {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.activity-filters input,
+.activity-filters select {
+  width: 100%;
+  min-width: 0;
+  padding: 10px 12px;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.activity-search {
+  grid-column: span 2;
+}
+.activity-filters .btn {
+  align-self: end;
+}
+.activity-list {
+  display: grid;
+  gap: 12px;
+}
+.activity-entry {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  overflow-wrap: anywhere;
+}
+.activity-entry h3 {
+  margin: 12px 0 6px;
+  font-size: 15px;
+}
+.activity-entry p {
+  margin: 6px 0;
+  font-size: 13px;
+}
+.activity-entry small,
+.activity-entry time,
+.activity-changes {
+  color: var(--muted);
+  font-size: 12px;
+}
+.activity-entry .btn {
+  margin-top: 12px;
+}
+@media (max-width: 700px) {
+  .workspace-banner {
+    flex-wrap: wrap;
+    padding: 14px;
+  }
+  .workspace-banner > div {
+    flex-basis: calc(100% - 40px);
+  }
+  .workspace-banner > .btn {
+    width: 100%;
+  }
+  .workspace-directory,
+  .activity-panel {
+    padding: 16px;
+  }
+  .workspace-directory-heading,
+  .activity-entry-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .workspace-card-list {
+    grid-template-columns: 1fr;
+  }
+  .workspace-card {
+    padding: 16px;
+  }
+  .activity-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .activity-filters .activity-search {
+    grid-column: 1 / -1;
+  }
+}

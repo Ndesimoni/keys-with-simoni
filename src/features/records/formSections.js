@@ -1,5 +1,5 @@
 import { schema } from '../../lib/schema.js';
-import { calendarFields } from '../../config/calendar.js';
+import { localScheduleFields } from '../../config/calendar.js';
 
 const section = (id, title, keys, media = false) => ({ id, title, keys, media });
 
@@ -206,12 +206,12 @@ export function recordFormSections(module) {
   }
   const scheduling = [
     ...editable.filter((field) => field.key === scheduleDate),
-    ...calendarFields(module),
+    ...localScheduleFields(module),
   ];
   if (scheduling.length)
     sections.push({
       id: 'schedule',
-      title: 'Scheduling & Google Calendar',
+      title: 'Scheduling',
       fields: scheduling,
       media: false,
     });

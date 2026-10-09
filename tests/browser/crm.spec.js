@@ -19,9 +19,11 @@ test('dark mode is the default and saved light mode and targets persist independ
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await expect(page.locator('html')).toHaveCSS('color-scheme', 'dark');
   await expect
-    .poll(() => page.evaluate(() => Boolean(localStorage.getItem('kws-crm-v1'))))
+    .poll(() => page.evaluate(() => Boolean(localStorage.getItem('kws-crm-v1:workspace:aidah'))))
     .toBe(true);
-  const workspaceBefore = await page.evaluate(() => localStorage.getItem('kws-crm-v1'));
+  const workspaceBefore = await page.evaluate(() =>
+    localStorage.getItem('kws-crm-v1:workspace:aidah'),
+  );
   await navigate(page, 'Performance');
   const month = await page.locator('input[type="month"]').inputValue();
   await page.getByRole('spinbutton', { name: 'Target for New enquiries', exact: true }).fill('55');
@@ -30,7 +32,9 @@ test('dark mode is the default and saved light mode and targets persist independ
   await expect
     .poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('kws-crm-preferences'))?.theme))
     .toBe('light');
-  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1'))).toBe(workspaceBefore);
+  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1:workspace:aidah'))).toBe(
+    workspaceBefore,
+  );
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await expect(page.locator('html')).toHaveCSS('color-scheme', 'light');
@@ -54,13 +58,15 @@ test('failed storage writes preserve in-memory editing and theme behavior', asyn
   });
   await page.goto('/');
   await expect
-    .poll(() => page.evaluate(() => Boolean(localStorage.getItem('kws-crm-v1'))))
+    .poll(() => page.evaluate(() => Boolean(localStorage.getItem('kws-crm-v1:workspace:aidah'))))
     .toBe(true);
-  const workspaceBefore = await page.evaluate(() => localStorage.getItem('kws-crm-v1'));
+  const workspaceBefore = await page.evaluate(() =>
+    localStorage.getItem('kws-crm-v1:workspace:aidah'),
+  );
   await page.evaluate(() => {
     const setItem = Storage.prototype.setItem;
     Storage.prototype.setItem = function (key, value) {
-      if (key === 'kws-crm-v1' || key === 'kws-crm-preferences') {
+      if (key === 'kws-crm-v1:workspace:aidah' || key === 'kws-crm-preferences') {
         throw new DOMException('Simulated storage failure', 'QuotaExceededError');
       }
       return setItem.call(this, key, value);
@@ -77,13 +83,15 @@ test('failed storage writes preserve in-memory editing and theme behavior', asyn
     .getByRole('textbox', { name: 'Search Clients', exact: true })
     .fill('Unsaved Storage Client');
   await expect(page.locator('.data-table tbody tr')).toHaveCount(1);
-  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1'))).toBe(workspaceBefore);
+  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1:workspace:aidah'))).toBe(
+    workspaceBefore,
+  );
   await page.getByRole('button', { name: 'Switch to light mode', exact: true }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   expect(errors).toEqual([]);
 });
 
-test('all 19 screens render and the original workbook is served', async ({ page }) => {
+test('all 19 CRM screens render and the original workbook is served', async ({ page }) => {
   const errors = [];
   page.on('pageerror', (error) => errors.push(error.message));
   await page.goto('/');
@@ -135,7 +143,14 @@ test('property filters, search focus, and paginated table work', async ({ page }
   await page.goto('/');
   await navigate(page, 'Properties');
   const cards = page.locator('.modern-property-card');
-  await expect(cards).toHaveCount(13);
+  await expect(cards).toHaveCount(12);
+  const pages = page.getByRole('navigation', { name: 'Property pages', exact: true });
+  await expect(page.getByRole('button', { name: /^More property listings/ })).toHaveCount(0);
+  await pages.getByRole('button', { name: 'Next', exact: true }).click();
+  await expect(cards).toHaveCount(1);
+  await expect(pages).toContainText('Page 2 of 2');
+  await pages.getByRole('button', { name: 'Previous', exact: true }).click();
+  await expect(cards).toHaveCount(12);
   await page.getByRole('button', { name: /Holiday homes/ }).click();
   await expect(cards).toHaveCount(2);
   await page.getByRole('button', { name: /For rent/ }).click();
@@ -223,7 +238,10 @@ test('existing browser workspace and theme preferences still load on mobile', as
   const data = SEED_CRM();
   data.Clients.push({ client_id: 'CL-LEGACY', full_name: 'Existing Browser Client' });
   await page.evaluate((saved) => {
-    localStorage.setItem('kws-crm-v1', JSON.stringify({ data: saved, demo: false }));
+    localStorage.setItem(
+      'kws-crm-v1:workspace:aidah',
+      JSON.stringify({ data: saved, demo: false }),
+    );
     localStorage.setItem('kws-crm-preferences', JSON.stringify({ targets: {}, theme: 'dark' }));
   }, data);
   await page.reload();
@@ -238,7 +256,10 @@ test('existing browser workspace and theme preferences still load on mobile', as
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await page.getByRole('button', { name: 'Toggle navigation', exact: true }).click();
   await navigate(page, 'Properties');
-  await expect(page.locator('.modern-property-card')).toHaveCount(13);
+  await expect(page.locator('.modern-property-card')).toHaveCount(12);
+  await expect(page.getByRole('navigation', { name: 'Property pages', exact: true })).toContainText(
+    'Page 1 of 2',
+  );
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),
   ).toBe(true);

@@ -1,5 +1,6 @@
 import { MODS, schema } from './schema.js';
 import { calendarFields } from '../config/calendar.js';
+import { normalizeActivity } from '../features/activity/model.js';
 
 export const isObject = (value) =>
   value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -61,5 +62,6 @@ export function normalizeWorkspaceData(input) {
 export function normalizeEnvelope(input) {
   if (!isObject(input) || !isObject(input.data))
     throw Error('The saved workspace has an invalid format.');
+  if (input.activity !== undefined) normalizeActivity(input.activity);
   return { ...input, data: normalizeWorkspaceData(input.data) };
 }

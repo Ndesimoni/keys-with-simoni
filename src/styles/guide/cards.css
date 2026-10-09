@@ -1,0 +1,109 @@
+.guide-hero {
+  border-radius: 14px;
+  background: #1b362c;
+  padding: 36px 42px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.guide-hero:after {
+  content: 'K';
+  font-size: 260px;
+  font-family: Georgia, serif;
+  position: absolute;
+  right: 4%;
+  top: -33%;
+  color: rgba(216, 200, 151, 0.075);
+}
+.guide-hero h1 {
+  font-size: 31px;
+  line-height: 1.3;
+  margin: 13px 0;
+  color: #fff;
+  position: relative;
+  z-index: 1;
+}
+.guide-hero h1 em {
+  font-style: normal;
+  font-family: Georgia, serif;
+  font-weight: 400;
+  color: #e1c18e;
+  letter-spacing: -0.035em;
+}
+.guide-hero p {
+  font-size: 11px;
+  color: #b2c3b8;
+  margin: 0 0 20px;
+  max-width: 370px;
+  line-height: 1.7;
+}
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+.guide-card {
+  border: 1px solid #e7ede8;
+  background: #fff;
+  text-align: left;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.16s;
+}
+.guide-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px #24433116;
+}
+.guide-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #a9b9aa;
+  margin-bottom: 27px;
+}
+.guide-top span {
+  font-family: Georgia, serif;
+  color: #ba996c;
+  font-size: 20px;
+}
+.guide-card h3 {
+  font-size: 14px;
+  color: #375040;
+  margin: 0 0 8px;
+}
+.guide-card p {
+  font-size: 10px;
+  line-height: 1.8;
+  color: #98a69b;
+  min-height: 52px;
+}
+.guide-card > div:last-child {
+  color: #ad8b5e;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 800;
+  font-size: 10px;
+  margin-top: 16px;
+}
+.guide-import {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+}
+.guide-import h2 {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+.guide-import p {
+  font-size: 10.5px;
+  max-width: 580px;
+  line-height: 1.8;
+  margin: 0;
+}
+.guide-actions {
+  display: flex;
+  gap: 9px;
+  flex-shrink: 0;
+}

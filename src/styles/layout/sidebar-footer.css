@@ -1,0 +1,73 @@
+.sidebar-bottom {
+  margin-top: auto;
+}
+.upgrade-card {
+  padding: 16px 15px;
+  background: linear-gradient(155deg, #29413a, #22372f);
+  border-radius: 12px;
+  margin: 10px 5px 17px;
+  position: relative;
+  border: 1px solid rgba(237, 218, 173, 0.07);
+}
+.upgrade-icon {
+  color: #d5b47e;
+  margin-bottom: 11px;
+}
+.upgrade-card h4 {
+  font-size: 12px;
+  letter-spacing: -0.02em;
+  margin: 0 0 7px;
+  color: #f4f1e9;
+}
+.upgrade-card p {
+  font-size: 10px;
+  line-height: 1.7;
+  color: #9db2a6;
+  margin: 0 0 16px;
+}
+.upgrade-card button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: #e1bb83;
+  font-size: 10px;
+  font-weight: 700;
+}
+.side-footer {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 7px 2px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.footer-avatar {
+  height: 34px;
+  width: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #dbc5a2;
+  color: #1c322c;
+  font-size: 10px;
+  font-weight: 800;
+}
+.side-footer > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.side-footer strong {
+  color: #ecefeb;
+  font-size: 10px;
+}
+.side-footer small {
+  font-size: 9px;
+  color: #81978c;
+}
+.side-footer > svg {
+  color: #83998e;
+}

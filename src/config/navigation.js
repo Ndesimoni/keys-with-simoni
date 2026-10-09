@@ -4,8 +4,8 @@ const nav = [
     items: [
       ['Dashboard', 'grid'],
       ['Client desk', 'search'],
+      ['Messages', 'chat'],
       ['CRM insights', 'sparkle'],
-      ['Calendar', 'calendar'],
     ],
   },
   {
@@ -36,8 +36,12 @@ const nav = [
 ];
 
 const labels = {
+  Workspaces: 'All workspaces',
+  'Team activity': 'Team activity',
+  Messages: 'Messages',
+  'Team & access': 'Team & access',
+  'My profile': 'My profile & messaging',
   Dashboard: 'Overview',
-  Calendar: 'Calendar & appointments',
   Leads: 'Leads & sources',
   Deals: 'Deals & commissions',
   Clients: 'Clients & requirements',
@@ -58,7 +62,11 @@ const labels = {
 };
 
 const descriptions = {
-  Calendar: 'Schedule follow-ups, viewings, meetings and calls, and connect Google Calendar.',
+  Workspaces: 'Review each member’s workspace and open their CRM records.',
+  'Team activity': 'See who changed CRM records and reviewed message previews, and when.',
+  Messages: 'Start a message by email or WhatsApp for one or several recipients.',
+  'Team & access': 'Invite your team, assign roles and control client messaging access.',
+  'My profile': 'Update your contact details and review account access and sender connections.',
   Leads: 'Track enquiries, contact details, and where every lead came from.',
   Clients: 'Manage relationships, qualification, budgets, and conversion.',
   Contacts: 'A single record for every landlord, client, owner, developer, and broker.',

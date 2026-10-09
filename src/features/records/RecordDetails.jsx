@@ -10,12 +10,17 @@ import { Button } from '../../components/ui/Button.jsx';
 import React, { useId } from 'react';
 import { Drawer } from '../../components/ui/Drawer.jsx';
 import { safeExternalUrl } from '../../lib/validation.js';
-import { useNavigation } from '../../hooks/useWorkspace.js';
+import { useNavigation, useWorkspaceActions } from '../../hooks/useWorkspace.js';
+import { useSession } from '../../hooks/useSession.js';
+import { hasMessagingAccess } from '../messaging/model.js';
 import { RecordSchedule } from '../calendar/RecordSchedule.jsx';
+import { OverflowList } from '../../components/ui/OverflowList.jsx';
 
 function RecordDetails({ detail, data, edit, remove, close }) {
   const { module, record: r } = detail;
   const { route } = useNavigation();
+  const { startMessage } = useWorkspaceActions();
+  const { user } = useSession();
   const lead = module === 'Clients' && route === 'Leads';
   const fields = schema(module);
   const id = get(r, fields[0].name);
@@ -46,6 +51,19 @@ function RecordDetails({ detail, data, edit, remove, close }) {
         </button>
       </div>
       <div className="drawer-body">
+        {module === 'Clients' && (
+          <div className="record-message-action">
+            <Button
+              variant="light"
+              icon="chat"
+              disabled={!hasMessagingAccess(user)}
+              onClick={() => startMessage(r)}
+            >
+              Start message
+            </Button>
+            <small>Choose Email or WhatsApp. No message is sent by this preview.</small>
+          </div>
+        )}
         {['Follow-ups', 'Viewings'].includes(module) && (
           <RecordSchedule module={module} record={r} data={data} />
         )}
@@ -107,18 +125,22 @@ function RecordDetails({ detail, data, edit, remove, close }) {
                 <Icon name="check" size={18} />
                 <h3>Amenities & highlights</h3>
               </div>
-              <div className="amenity-tags">
-                {amenityList(r).length ? (
-                  amenityList(r).map((a) => (
-                    <span key={a}>
+              {amenityList(r).length ? (
+                <OverflowList
+                  items={amenityList(r)}
+                  getKey={(a) => a}
+                  label="Property amenities"
+                  listClassName="amenity-tags"
+                  renderItem={(a) => (
+                    <span>
                       <Icon name="check" size={13} />
                       {a}
                     </span>
-                  ))
-                ) : (
-                  <p className="property-muted">Amenities have not been added.</p>
-                )}
-              </div>
+                  )}
+                />
+              ) : (
+                <p className="property-muted">Amenities have not been added.</p>
+              )}
               {get(r, 'Key selling points') && (
                 <p className="property-highlights">{get(r, 'Key selling points')}</p>
               )}

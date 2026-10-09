@@ -10,7 +10,9 @@ test('mobile lead and contact overlays keep controls visible, scroll internally 
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.locator('.data-table tbody tr').first().click();
   await expectRecordOverlay(page, { fullScreen: true });
-  const workspaceBefore = await page.evaluate(() => localStorage.getItem('kws-crm-v1'));
+  const workspaceBefore = await page.evaluate(() =>
+    localStorage.getItem('kws-crm-v1:workspace:aidah'),
+  );
   const dialog = page.getByRole('dialog');
   const body = dialog.locator('.drawer-body');
   await body.evaluate((element) => {
@@ -41,7 +43,9 @@ test('mobile lead and contact overlays keep controls visible, scroll internally 
   page.once('dialog', (event) => event.accept());
   await page.keyboard.press('Escape');
   await expect(dialog).toHaveCount(0);
-  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1'))).toBe(workspaceBefore);
+  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1:workspace:aidah'))).toBe(
+    workspaceBefore,
+  );
   expect(await page.evaluate(() => document.body.style.overflow)).toBe('');
 
   await page.goto('/#/contacts');

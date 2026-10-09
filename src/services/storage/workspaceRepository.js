@@ -1,17 +1,27 @@
 import { STORAGE } from '../../config/storage.js';
 import { SEED_CRM } from '../../data/demo.js';
 import { normalizeEnvelope } from '../../lib/validation.js';
+import { blank } from '../../lib/schema.js';
+import { WORKSPACE_SAVED_EVENT, SUPER_WORKSPACE_ID } from '../../config/workspaces.js';
+import { workspaceStorageKey } from '../../features/workspaces/model.js';
 
 /** Storage is resolved when used so importing this module is safe outside a browser. */
-export function createWorkspaceRepository(getStorage = () => globalThis.localStorage) {
+export function createWorkspaceRepository(
+  getStorage = () => globalThis.localStorage,
+  { key = STORAGE, seedDemo = true } = {},
+) {
   return {
     read() {
       let raw = null;
       try {
-        raw = getStorage().getItem(STORAGE);
+        raw = getStorage().getItem(key);
         const workspace =
           raw === null
-            ? { data: SEED_CRM(), demo: true, createdAt: new Date().toISOString() }
+            ? {
+                data: seedDemo ? SEED_CRM() : blank(),
+                demo: seedDemo,
+                createdAt: new Date().toISOString(),
+              }
             : normalizeEnvelope(JSON.parse(raw));
         return { workspace, error: null, raw };
       } catch (error) {
@@ -34,9 +44,18 @@ export function createWorkspaceRepository(getStorage = () => globalThis.localSto
 
     save(workspace) {
       // Propagate write failures; the React persistence hook owns the user notification.
-      getStorage().setItem(STORAGE, JSON.stringify(workspace));
+      getStorage().setItem(key, JSON.stringify(workspace));
+      if (typeof window !== 'undefined') window.dispatchEvent(new Event(WORKSPACE_SAVED_EVENT));
     },
   };
 }
 
 export const workspaceRepository = createWorkspaceRepository();
+
+export function createScopedWorkspaceRepository(id, getStorage = () => globalThis.localStorage) {
+  return createWorkspaceRepository(getStorage, {
+    key: workspaceStorageKey(id),
+    // Aidah receives fresh fictional sample records, never a copy of the old shared store.
+    seedDemo: id === SUPER_WORKSPACE_ID || id === 'aidah',
+  });
+}

@@ -1,0 +1,76 @@
+@media (max-width: 750px) {
+  .page-heading h1 {
+    font-size: 26px;
+  }
+  .inventory-hero h2 {
+    font-size: 25px;
+  }
+  .inventory-hero p {
+    font-size: 12px;
+  }
+  .purpose-pill {
+    font-size: 11.5px;
+  }
+  .modern-property-card .property-photo {
+    height: 170px;
+  }
+  .sidebar .nav-item {
+    font-size: 13px;
+  }
+  .editor-photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 510px) {
+  .inventory-hero {
+    padding: 23px 20px;
+  }
+  .inventory-hero h2 {
+    font-size: 25px;
+  }
+  .inventory-results-bar strong {
+    font-size: 15px;
+  }
+  .inventory-field input,
+  .inventory-field select {
+    font-size: 12px;
+  }
+  .purpose-pill {
+    min-height: 50px;
+  }
+  .modern-property-card .property-photo {
+    height: 193px;
+  }
+  .editor-media {
+    padding: 13px;
+  }
+  .media-photo-hero {
+    height: 210px;
+  }
+  .topbar .theme-switch {
+    min-width: 42px;
+  }
+}
+
+.editor-photo button.make-cover {
+  top: auto;
+  right: auto;
+  left: 6px;
+  bottom: 6px;
+  height: auto;
+  width: auto;
+  padding: 6px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.media-photo-hero a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.media-photo-thumbs a {
+  display: block;
+  min-width: 0;
+}

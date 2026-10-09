@@ -1,0 +1,127 @@
+:root[data-theme] .directory-top {
+  padding: 16px 20px;
+  min-height: 84px;
+  gap: 16px;
+}
+:root[data-theme] .large-count {
+  color: var(--ink);
+  font-size: 30px;
+}
+:root[data-theme] .directory-count {
+  gap: 16px;
+}
+:root[data-theme] .directory-count strong {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+:root[data-theme] .directory-count p {
+  margin: 3px 0 0;
+}
+:root[data-theme] .filters-toolbar {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  gap: 16px;
+}
+:root[data-theme] .tabs {
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  background: var(--surface-subtle);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 4px;
+  gap: 4px;
+}
+:root[data-theme] .tabs button {
+  min-height: 36px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  flex-shrink: 0;
+  white-space: nowrap;
+  border-radius: 6px;
+}
+:root[data-theme] .tabs button.active {
+  background: var(--panel);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 1px 4px #00000012;
+}
+:root[data-theme] .data-table th {
+  color: var(--muted);
+  background: var(--surface-subtle);
+  padding: 12px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+:root[data-theme] .table-sort {
+  color: var(--muted);
+  min-height: 24px;
+}
+:root[data-theme] .data-table td {
+  color: var(--ink);
+  font-size: 13px;
+  height: 60px;
+  padding: 12px 16px;
+  border-color: var(--line);
+}
+:root[data-theme] .data-table :is(.cell-strong, .id-link) {
+  font-weight: 600;
+  font-size: 13px;
+}
+:root[data-theme] .id-link {
+  color: var(--accent);
+}
+:root[data-theme] .data-table tbody tr {
+  background: var(--panel);
+}
+:root[data-theme] .data-table tbody tr:hover {
+  background: var(--hover);
+}
+:root[data-theme] :is(.table-footer, .collection-pagination, .pager) {
+  color: var(--muted);
+  font-size: 12px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+:root[data-theme] .badge {
+  font-weight: 600;
+  font-size: 11px;
+  padding: 5px 9px;
+}
+:root[data-theme] .badge-green {
+  color: #28603e;
+  background: #e5f1e8;
+}
+:root[data-theme] .badge-amber {
+  color: #805b24;
+  background: #f8efd9;
+}
+:root[data-theme] .badge-red {
+  color: #9b3d38;
+  background: #fae8e5;
+}
+:root[data-theme] .badge-slate {
+  color: #51655b;
+  background: #edf2ef;
+}
+:root[data-theme='dark'] .badge-green {
+  color: #b2dfbd;
+  background: #294735;
+}
+:root[data-theme='dark'] .badge-amber {
+  color: #efd09d;
+  background: #493d28;
+}
+:root[data-theme='dark'] .badge-red {
+  color: #ffc3b9;
+  background: #492d2a;
+}
+:root[data-theme='dark'] .badge-slate {
+  color: #c5d4c9;
+  background: #304339;
+}

@@ -1,0 +1,136 @@
+@media (min-width: 1440px) {
+  :root[data-theme] .property-grid-refined {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 1270px) {
+  :root[data-theme] .main-content {
+    padding-inline: 24px;
+  }
+  :root[data-theme] .topbar {
+    padding-inline: 24px;
+  }
+  .dashboard-welcome {
+    flex-wrap: wrap;
+  }
+  :root[data-theme] .triple-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  :root[data-theme] .triple-grid .panel:last-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 1050px) {
+  :root[data-theme] .topbar {
+    gap: 16px;
+  }
+  :root[data-theme] .metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  :root[data-theme] .drawer.navigation-drawer {
+    width: min(320px, 88vw);
+  }
+  :root[data-theme] .navigation-drawer .sidebar {
+    padding-top: 12px;
+  }
+  :root[data-theme] .desk-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :root[data-theme] .profile-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 750px) {
+  :root[data-theme] .topbar {
+    height: 68px;
+    padding-inline: 16px;
+    gap: 12px;
+  }
+  :root[data-theme] .top-actions {
+    gap: 8px;
+  }
+  :root[data-theme] .breadcrumbs > span,
+  :root[data-theme] .breadcrumbs > svg {
+    display: none;
+  }
+  :root[data-theme] .breadcrumbs strong {
+    display: block;
+    max-width: 110px;
+    font-size: 12px;
+  }
+  :root[data-theme] .main-content {
+    padding: 20px 16px;
+  }
+  :root[data-theme] .workspace-banner {
+    margin-bottom: 20px;
+  }
+  :root[data-theme] .page-heading {
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  :root[data-theme] .page-heading h1 {
+    font-size: 26px;
+  }
+  :root[data-theme] .heading-actions {
+    justify-content: space-between;
+  }
+  :root[data-theme] .theme-switch {
+    min-width: 44px;
+    padding: 0 10px;
+  }
+  :root[data-theme] .theme-switch > span {
+    display: none;
+  }
+  :root[data-theme] .page-stack {
+    gap: 16px;
+  }
+  :root[data-theme] :is(.panel, .desk-body, .workspace-directory, .activity-panel) {
+    padding: 20px;
+  }
+  .dashboard-welcome {
+    padding: 20px;
+    gap: 16px;
+  }
+  .dashboard-welcome h2 {
+    font-size: 17px;
+  }
+  .dashboard-quick-actions {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .dashboard-quick-actions .btn {
+    flex: 1;
+  }
+  :root[data-theme] .metric {
+    padding: 16px;
+  }
+  :root[data-theme] .metric-value {
+    font-size: 24px;
+  }
+  :root[data-theme] .metric-head {
+    font-size: 10px;
+    align-items: flex-start;
+  }
+  :root[data-theme] .metric-foot {
+    font-size: 12px;
+  }
+  :root[data-theme] .metric-icon {
+    width: 28px;
+    height: 28px;
+  }
+  :root[data-theme] :is(.triple-grid, .split-main, .two-grid, .performance-grid) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :root[data-theme] .triple-grid .panel:last-child {
+    grid-column: auto;
+  }
+  :root[data-theme] .subhead-row {
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  :root[data-theme] .date-select {
+    align-self: flex-end;
+  }
+}

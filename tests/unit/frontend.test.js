@@ -20,7 +20,13 @@ import {
   selectMonthlyPerformance,
   selectPerformanceMonth,
 } from '../../src/features/reports/selectors.js';
-import { routes, routeName, routePath } from '../../src/config/routes.js';
+import {
+  routes,
+  crmRoutes,
+  settingsRoutes,
+  routeName,
+  routePath,
+} from '../../src/config/routes.js';
 import { createWorkspaceRepository } from '../../src/services/storage/workspaceRepository.js';
 import { schema } from '../../src/lib/schema.js';
 import { formatValue } from '../../src/lib/crm.js';
@@ -250,10 +256,16 @@ test('date search uses inclusive boundaries, chronological order and explicit in
   assert.equal(data.Clients[0].client_id, 'CL-2');
 });
 
-test('all 19 sections have unique stable routes and external links accept only web URLs', () => {
-  assert.equal(routes.length, 19);
-  assert.equal(new Set(routes.map((route) => route.path)).size, 19);
-  assert.equal(routePath('Calendar'), '/calendar');
+test('19 CRM sections and four account/workspace screens have unique stable routes and safe external links', () => {
+  assert.equal(crmRoutes.length, 19);
+  assert.equal(settingsRoutes.length, 4);
+  assert.equal(routes.length, 23);
+  assert.equal(new Set(routes.map((route) => route.path)).size, 23);
+  assert.equal(routePath('Messages'), '/messages');
+  assert.equal(
+    routes.some((route) => route.name === 'Calendar'),
+    false,
+  );
   assert.equal(routePath('Leads'), '/leads');
   for (const route of routes) assert.equal(routeName(routePath(route.name)), route.name);
   assert.equal(routeName('/unknown'), 'Page not found');

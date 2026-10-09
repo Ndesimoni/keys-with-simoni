@@ -1,21 +1,9 @@
-import { useEffect } from 'react';
-import { useBlocker } from 'react-router-dom';
+import { useContext, useEffect, useId } from 'react';
+import { NavigationGuardContext } from '../app/NavigationGuardProvider.jsx';
 
-export function useUnsavedChanges(dirty, busy = false) {
-  const blocker = useBlocker(dirty || busy);
-  useEffect(() => {
-    if (blocker.state !== 'blocked') return;
-    if (busy) blocker.reset();
-    else if (confirm('Discard your unsaved changes and leave this page?')) blocker.proceed();
-    else blocker.reset();
-  }, [blocker, busy]);
-  useEffect(() => {
-    if (!dirty && !busy) return;
-    const beforeUnload = (event) => {
-      event.preventDefault();
-      event.returnValue = '';
-    };
-    window.addEventListener('beforeunload', beforeUnload);
-    return () => window.removeEventListener('beforeunload', beforeUnload);
-  }, [dirty, busy]);
+export function useUnsavedChanges(dirty, busy = false, message = '') {
+  const register = useContext(NavigationGuardContext);
+  const id = useId();
+  if (!register) throw Error('Form navigation guards require NavigationGuardProvider.');
+  useEffect(() => register(id, { dirty, busy, message }), [register, id, dirty, busy, message]);
 }

@@ -60,7 +60,7 @@ export function validateRecord(module, record, records = [], original = null, da
     Number(record.minimum_budget_aed) > Number(record.maximum_budget_aed)
   )
     errors.maximum_budget_aed = 'Maximum budget must be at least the minimum budget.';
-  return { ...errors, ...scheduleErrors(module, record, data) };
+  return { ...errors, ...scheduleErrors(module, record, data, { includeIntegration: false }) };
 }
 
 /** Advancing a form checks only the fields shown in its current section. */

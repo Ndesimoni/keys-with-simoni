@@ -1,0 +1,13 @@
+/* Shared product styling. Feature styles load first; these files define common UI contracts. */
+@import './system/surfaces.css';
+@import './system/navigation.css';
+@import './system/chrome.css';
+@import './system/search.css';
+@import './system/controls.css';
+@import './system/dashboard.css';
+@import './system/records.css';
+@import './system/properties.css';
+@import './system/forms.css';
+@import './system/messaging.css';
+@import './system/responsive.css';
+@import './system/motion.css';

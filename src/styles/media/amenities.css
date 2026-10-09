@@ -1,0 +1,31 @@
+.amenity-picker {
+  border-top: 1px solid var(--line);
+  padding-top: 15px;
+}
+.amenity-picker > strong {
+  font-size: 13px;
+  display: block;
+  margin-bottom: 11px;
+}
+.amenity-chip-list,
+.amenity-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.amenity-chip-list button {
+  border: 1px solid #cbdbce;
+  background: var(--panel);
+  border-radius: 30px;
+  padding: 6px 11px;
+  font-size: 11.5px;
+  color: #4f6658;
+}
+.amenity-chip-list button.checked {
+  background: #255943;
+  border-color: #255943;
+  color: #fff;
+}
+.amenity-chip-list button svg {
+  vertical-align: middle;
+}

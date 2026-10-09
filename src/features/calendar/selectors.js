@@ -21,7 +21,7 @@ export function dubaiInstant(value) {
   return Number.isFinite(date.getTime()) ? date.toISOString() : null;
 }
 
-export function scheduleErrors(module, record, data) {
+export function scheduleErrors(module, record, data, { includeIntegration = true } = {}) {
   if (!['Follow-ups', 'Viewings'].includes(module)) return {};
   const errors = {};
   const startKey = module === 'Viewings' ? 'appointment_date_time' : 'calendar_start';
@@ -38,7 +38,7 @@ export function scheduleErrors(module, record, data) {
     errors.due_date = 'Choose a due date or a start date and time.';
   for (const [key, min, max] of [
     ['calendar_duration', 1, 1440],
-    ['calendar_reminder', 0, 40320],
+    ...(includeIntegration ? [['calendar_reminder', 0, 40320]] : []),
   ]) {
     if (
       record[key] !== undefined &&
@@ -51,7 +51,7 @@ export function scheduleErrors(module, record, data) {
   }
   if (record.calendar_activity && !ACTIVITY_TYPES.includes(record.calendar_activity))
     errors.calendar_activity = 'Choose an activity type.';
-  if (record.calendar_invite === 'Yes') {
+  if (includeIntegration && record.calendar_invite === 'Yes') {
     const client = data?.Clients?.find((row) => row.client_id === record.client_id);
     if (!client || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(client.email || ''))
       errors.calendar_invite = 'Choose a client with a valid email address to send an invitation.';

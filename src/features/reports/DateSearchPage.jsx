@@ -6,6 +6,7 @@ import { Icon } from '../../components/ui/Icon.jsx';
 import { schema } from '../../lib/schema.js';
 import { Empty } from '../../components/ui/Empty.jsx';
 import React from 'react';
+import { OverflowList } from '../../components/ui/OverflowList.jsx';
 import { useRecords, useWorkspaceView, useWorkspaceActions } from '../../hooks/useWorkspace.js';
 
 function DateSearchPage() {
@@ -64,9 +65,23 @@ function DateSearchPage() {
           heading="Matching records"
           caption={`${dateFilter.type} · ${readableDate(dateFilter.start)} to ${readableDate(dateFilter.end)}`}
         />
-        <div className="date-result-list">
-          {arr.map((r, i) => (
-            <button key={i} className="result-row" onClick={() => dispatchRow(type.module, r)}>
+        <OverflowList
+          mode="scroll"
+          className="record-results-list"
+          key={JSON.stringify(dateFilter)}
+          items={arr}
+          getKey={(r) => get(r, schema(type.module)[0].name)}
+          label="Date search matches"
+          listClassName="date-result-list"
+          renderItem={(r, _index, { close }) => (
+            <button
+              type="button"
+              className="result-row"
+              onClick={() => {
+                close();
+                dispatchRow(type.module, r);
+              }}
+            >
               <span className="result-icon">
                 <Icon name="calendar" size={18} />
               </span>
@@ -81,15 +96,17 @@ function DateSearchPage() {
               <div className="result-date">{readableDate(get(r, type.field))}</div>
               <Icon name="arrow" size={17} />
             </button>
-          ))}
-          {!arr.length && (
-            <Empty
-              title="No records in this range"
-              detail="Change the record type or expand the dates to explore more results."
-              icon="calendar"
-            />
           )}
-        </div>
+          after={
+            !arr.length && (
+              <Empty
+                title="No records in this range"
+                detail="Change the record type or expand the dates to explore more results."
+                icon="calendar"
+              />
+            )
+          }
+        />
       </div>
     </div>
   );

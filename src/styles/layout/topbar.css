@@ -1,0 +1,132 @@
+.main-area {
+  margin-left: 255px;
+  min-width: 0;
+}
+.topbar {
+  height: 79px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 36px;
+  position: sticky;
+  top: 0;
+  z-index: 25;
+  gap: 30px;
+}
+.top-left {
+  display: flex;
+  align-items: center;
+  min-width: 230px;
+}
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: #9ca8a5;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.breadcrumbs strong {
+  color: #2a3b35;
+  font-weight: 700;
+}
+.breadcrumbs svg {
+  opacity: 0.55;
+}
+.top-center {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8faf9;
+  border: 1px solid #eff2f0;
+  border-radius: 10px;
+  color: #9ba8a4;
+  width: min(370px, 36vw);
+  height: 38px;
+  padding: 0 14px;
+}
+.top-center input {
+  width: 100%;
+  outline: 0 !important;
+  border: 0;
+  background: transparent;
+  font-size: 10.5px;
+  color: var(--ink);
+}
+.top-center input::placeholder {
+  color: #a2ada9;
+}
+.top-actions {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+.local-tag {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 9px;
+  letter-spacing: 0.07em;
+  font-weight: 800;
+  color: #81928b;
+}
+.local-tag > span,
+.demo-pill > span {
+  width: 7px;
+  height: 7px;
+  background: #8fb599;
+  border-radius: 100%;
+}
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #536661;
+  display: grid;
+  place-items: center;
+}
+.icon-btn:hover {
+  background: #f1f4f2;
+}
+.notif {
+  position: relative;
+}
+.notif b {
+  width: 7px;
+  height: 7px;
+  position: absolute;
+  right: 6px;
+  top: 5px;
+  background: #c89279;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+.user-button span {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: #e8e0d4;
+  border-radius: 10px;
+  color: #856845;
+  font-weight: 800;
+  font-size: 11px;
+}
+.hamburger {
+  display: none;
+  background: transparent;
+  border: 0;
+  color: #29423b;
+  margin-right: 8px;
+}
+.main-content {
+  max-width: 1650px;
+  margin: 0 auto;
+  padding: 30px 37px 19px;
+}

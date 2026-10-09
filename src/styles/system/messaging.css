@@ -1,0 +1,60 @@
+:root[data-theme]
+  :is(.team-metrics, .team-role-card, .profile-settings-details, .message-channel-choice label) {
+  background: var(--panel);
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+}
+:root[data-theme] :is(.team-notice p, .messages-intro p, .messages-guide span) {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+:root[data-theme] .message-recipient-control {
+  background: var(--panel);
+  border-color: var(--line);
+  border-radius: 10px;
+}
+:root[data-theme] :is(.message-recipient-chips li, .amenity-chip-list button:not(.checked)) {
+  color: var(--ink);
+  background: var(--surface-subtle);
+  border-color: var(--line);
+  font-size: 12px;
+  font-weight: 500;
+}
+:root[data-theme] :is(.message-recipient-picker, .overflow-list-panel) {
+  background: var(--panel);
+  border-color: var(--line);
+  box-shadow: 0 8px 24px #00000012;
+}
+:root[data-theme] :is(.message-recipient-option, .team-check):hover {
+  background: var(--hover);
+}
+:root[data-theme]
+  :is(.team-metrics strong, .messages-guide strong, .message-channel-choice label strong) {
+  font-weight: 600;
+}
+:root[data-theme] .message-channel-choice label.selected {
+  border-color: var(--focus);
+  background: var(--surface-subtle);
+}
+:root[data-theme] .team-inline-actions {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+:root[data-theme] .team-table th {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface-subtle);
+}
+:root[data-theme] .team-table td {
+  font-size: 13px;
+  border-color: var(--line);
+}
+:root[data-theme] .sign-in-demo {
+  background: var(--surface-subtle);
+  border-color: var(--line);
+}
+:root[data-theme] .sign-in-subtitle {
+  color: var(--muted);
+}

@@ -16,9 +16,9 @@ const contacts = [
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript((records) => {
-    if (!localStorage.getItem('kws-crm-v1'))
+    if (!localStorage.getItem('kws-crm-v1:workspace:aidah'))
       localStorage.setItem(
-        'kws-crm-v1',
+        'kws-crm-v1:workspace:aidah',
         JSON.stringify({ data: { Contacts: records }, demo: false }),
       );
   }, contacts);

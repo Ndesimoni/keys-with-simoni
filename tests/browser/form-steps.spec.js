@@ -1,5 +1,5 @@
 import { expect, test } from './helpers/session.js';
-import { saveRecordForm } from './helpers/record-form.js';
+import { chooseFormSection, saveRecordForm } from './helpers/record-form.js';
 
 test('new multi-section records validate each step, preserve backtracking edits and save only after review', async ({
   page,
@@ -47,7 +47,7 @@ test('new multi-section records validate each step, preserve backtracking edits 
   await expect(dialog.locator('.record-review')).toContainText('Retained across steps');
   expect(
     await page.evaluate(() =>
-      JSON.parse(localStorage.getItem('kws-crm-v1')).data.Clients.some(
+      JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah')).data.Clients.some(
         (row) => row.client_id === 'CL-STEPS',
       ),
     ),
@@ -55,7 +55,7 @@ test('new multi-section records validate each step, preserve backtracking edits 
   await dialog.getByRole('button', { name: 'Edit section: Contact details', exact: true }).click();
   await expect(page.locator('#email')).toHaveValue('steps@example.com');
   await page.locator('#full_name').fill('Reviewed step workflow client');
-  await dialog.getByRole('button', { name: 'Step 6: Review & save', exact: true }).click();
+  await chooseFormSection(page, 'Step 6: Review & save');
   await expect(dialog.locator('.record-review')).toContainText('Reviewed step workflow client');
   await page.screenshot({ path: testInfo.outputPath('client-review-desktop.png') });
   await saveRecordForm(page);
@@ -71,26 +71,28 @@ test('editing can jump between sections and final validation returns to an inval
 }) => {
   await page.goto('/#/clients');
   await page.evaluate(() => {
-    const workspace = JSON.parse(localStorage.getItem('kws-crm-v1'));
+    const workspace = JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah'));
     workspace.data.Clients[0].minimum_budget_aed = 500;
     workspace.data.Clients[0].maximum_budget_aed = 100;
-    localStorage.setItem('kws-crm-v1', JSON.stringify(workspace));
+    localStorage.setItem('kws-crm-v1:workspace:aidah', JSON.stringify(workspace));
   });
   await page.reload();
   await page.locator('.data-table tbody tr').first().click();
   await page.getByRole('button', { name: 'Edit record', exact: true }).click();
   const dialog = page.getByRole('dialog');
-  await dialog.getByRole('button', { name: 'Step 6: Review & save', exact: true }).click();
+  await chooseFormSection(page, 'Step 6: Review & save');
   await dialog.getByRole('button', { name: 'Save changes', exact: true }).click();
   await expect(dialog.locator('.form-progress')).toContainText('Step 3 of 6');
   await expect(page.locator('#maximum_budget_aed')).toBeFocused();
   await page.locator('#maximum_budget_aed').fill('900');
-  await dialog.getByRole('button', { name: 'Step 6: Review & save', exact: true }).click();
+  await chooseFormSection(page, 'Step 6: Review & save');
   await saveRecordForm(page);
   await expect(dialog).toHaveCount(0);
   expect(
     await page.evaluate(
-      () => JSON.parse(localStorage.getItem('kws-crm-v1')).data.Clients[0].maximum_budget_aed,
+      () =>
+        JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah')).data.Clients[0]
+          .maximum_budget_aed,
     ),
   ).toBe('900');
 });

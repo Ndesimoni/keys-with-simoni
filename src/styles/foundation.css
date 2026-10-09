@@ -2,14 +2,28 @@
   --ink: #1e2e2d;
   --deep: #132623;
   --deep2: #1b302d;
-  --muted: #81908d;
-  --muted-dark: #647470;
+  --muted: #607267;
+  --muted-dark: #53665b;
   --gold: #bc9765;
   --gold-light: #e4cda5;
-  --bg: #f6f8f7;
+  --bg: #f3f6f4;
   --panel: #fff;
-  --line: #e8ecea;
-  --hover: #f8faf9;
+  --line: #dce5df;
+  --hover: #edf3ef;
+  --surface-subtle: #f7f9f8;
+  --primary: #28523d;
+  --primary-hover: #1e4331;
+  --on-primary: #ffffff;
+  --accent: #80603a;
+  --accent-subtle: #f7f0e5;
+  --danger: #a33b37;
+  --danger-surface: #fff0ee;
+  --focus: #477a60;
+  --focus-ring: #477a602b;
+  --sidebar: #12241c;
+  --sidebar-text: #b7c8bd;
+  --duration: 160ms;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --radius: 14px;
   --shadow: 0 4px 22px rgba(28, 50, 45, 0.025);
 }
@@ -24,14 +38,13 @@ body {
   color: var(--ink);
   background: var(--bg);
   font-family:
-    Manrope,
-    'DM Sans',
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
-  font-size: 13px;
-  letter-spacing: -0.012em;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
 }
 button,
 input,
@@ -49,7 +62,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid rgba(188, 151, 101, 0.35);
+  outline: 2px solid var(--focus);
   outline-offset: 2px;
 }
 button:disabled {
@@ -67,10 +80,10 @@ h1,
 h2,
 h3,
 h4 {
-  letter-spacing: -0.045em;
+  letter-spacing: -0.025em;
 }
 p {
-  color: #81908d;
+  color: var(--muted);
 }
 svg {
   flex-shrink: 0;

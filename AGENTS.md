@@ -27,7 +27,7 @@ Professional real estate CRM focused on the UAE market.
 
 ## Existing Features
 
-- 19 CRM screens covering the original 17-sheet workbook plus calendar scheduling
+- 19 CRM screens covering the original 17-sheet workbook and messaging preview
 - Dashboard and analytics
 - Client and lead management
 - Properties for sale and rent
@@ -36,10 +36,13 @@ Professional real estate CRM focused on the UAE market.
 - Property photos, floor plans and amenities
 - Lead qualification and scoring
 - Follow-ups and viewing management
-- Google Calendar integration through a local Rust/Axum companion
+- Local follow-up/viewing schedules; Google Calendar integration is deferred
 - Deals, commissions and expenses
 - Light and dark mode
 - Frontend email/password sign-in preview for Aidah and Simoni, both Admins
+- Super Admin/team/role preview, required phone numbers and separate WhatsApp/email permissions; see docs/team-access-preview.md
+- Private member workspaces, Super Admin workspace directory and scoped activity history; see docs/private-workspaces.md
+- Single/bulk email and WhatsApp message composers with client shortcuts, categorized recipient search and removable chips; see docs/messaging-preview.md
 - Responsive desktop/mobile interface
 
 ## Current Project Structure
@@ -65,19 +68,44 @@ Professional real estate CRM focused on the UAE market.
 
 Act as a senior software engineer and UI/UX designer.
 
+- Read and follow [Product design standards](docs/design-standards.md) before changing any screen, component or interaction. These standards apply throughout the CRM and to every agent working here.
+- Treat the current CRM refresh as the user-approved visual baseline. Follow the [approved visual direction](docs/design-standards.md#approved-visual-direction) and [reference previews](docs/design-refresh.md#visual-previews) for all new and updated screens, including colours, typography, spacing, shared controls, scrolling and interaction states.
+- Keep every hand-written code file at **150 physical lines or fewer after formatting**, including imports, comments and blank lines. This applies to components, hooks, business logic, styles, schemas, demo data, tests, scripts and configuration; it also applies to backend code when that phase resumes. Generated artifacts, lockfiles and prose documentation are excluded.
+- Split files by responsibility before adding code that exceeds the limit. Keep feature components together, extract hooks/selectors/services appropriately, and preserve CSS import order. Never compress statements, remove useful formatting or create numbered fragments to bypass the limit.
+- Run `npm run check:lines`. Existing oversized files are outstanding refactoring work, not exemptions. If a task changes one, split it safely within that task; report any remaining repository violations explicitly. Do not claim the size check passes until it exits successfully.
 - Preserve working features during refactoring.
+- Resolve workspace access before reading records. Non-Super Admins may use only their own member ID. Keep every linked CRM collection, recipient directory, report and export within the selected workspace.
+- Original `kws-crm-v1` records belong to the Super Admin organisation workspace. Personal records and targets use per-member keys. Never copy organisation records into a member's workspace; Aidah's fresh fictional examples are generated independently.
+- Store activity alongside the affected workspace envelope. Keep actor and workspace IDs distinct, and never store message bodies, recipient addresses, passwords or provider tokens in activity. The frontend remains a preview; real isolation and trustworthy auditing require backend enforcement.
 - Prefer reusable components and custom hooks.
 - Separate UI, business logic and data access.
 - Use consistent typography and spacing.
 - Maintain light and dark theme support.
+- Choose list presentation by task: paginated primary records, continuous scrolling for searchable lists, and six-item More disclosure for compact summaries. Use `components/ui/OverflowList.jsx` modes; expanded disclosure replaces the compact list without duplicating items or leaving a More button above it. Keep full collections in the model; see docs/option-overflow.md.
 - Design mobile-first, accessible interfaces.
 - Validate forms and handle errors.
 - Avoid unnecessary dependencies.
 - Test changes before marking work complete.
 
+## Development Agents
+
+Use the eight project specialists in `.codex/agents/` through the [Development agent workflow](docs/development-agents.md). These are development roles, separate from CRM user accounts.
+
+- Delegate focused work to the relevant specialist when it benefits the task. The primary agent owns the user's scope, coordinates work, checks results and completes the task.
+- For the frontend phase, use `senior_architect`, `product_designer`, `frontend_engineer` and `qa_accessibility`. Include `security_engineer` for access, storage, authentication or data-exposure changes; use `devops_release` for assigned frontend CI work.
+- `backend_database` and `integrations_engineer` are available for explicitly assigned later-phase work. Creating the agents does not start backend development, provider connections or external delivery.
+- Give each specialist a concrete task, affected files/contracts, acceptance criteria, allowed write set and required checks. Keep architecture, design and security reviews separate from implementation.
+- Run at most three specialists alongside the primary agent, within the session's actual limits. Parallelise independent reads and disjoint write sets; coordinate shared styles, configuration and fixed-port browser suites.
+- Specialists report evidence and limitations to the primary agent and do not start nested agents. In sessions without custom-agent discovery, read the relevant TOML instructions and include them in the delegated task; live session permissions still apply.
+- Follow existing task authorization. Agent handoffs and reviews do not introduce another user-confirmation step for work the user already authorized.
+
 ## Roadmap
 
-The frontend foundations are implemented; see `docs/frontend-completion.md`. Node 20 or later is required by the patched router dependency. Calendar integration uses a local Rust companion (Rust 1.89+); the shared PostgreSQL CRM, application authentication and hosted backend remain the next phase. Verify calendar changes with `npm run test:calendar`, browser checks, `cargo fmt`, and Clippy in addition to the standard checks. Browser tests start both Vite and the calendar service and force empty Google credentials.
+The current scope is frontend development. Calendar navigation, connection controls and background sync are removed from the active frontend; retain existing scheduling metadata and the companion source for a later phase. Browser tests start only Vite and require no Rust service. Historical Calendar browser scenarios are in `tests/deferred/` and are excluded from the active suite.
+
+See the proposed [CRM, website and mobile platform design](docs/platform-system-design.md) for future public listings and customer enquiries. The user requires Super Admin approval before public publication. Keep private CRM data separate from approved public listing versions and preserve enquiry ownership; production services remain a later implementation phase.
+
+The frontend foundations are implemented; see `docs/frontend-completion.md`. Node 20 or later is required by the patched router dependency. The shared PostgreSQL CRM, application authentication and hosted backend remain the next phase. If work on the retained Calendar backend is explicitly requested, verify it with `npm run test:calendar`, relevant browser checks, `cargo fmt`, and Clippy in addition to the standard checks (Rust 1.89+).
 
 1. Refactor monolithic React components.
 2. Improve property-management workflows.
@@ -93,5 +121,6 @@ The frontend foundations are implemented; see `docs/frontend-completion.md`. Nod
 
 This is currently a browser-local demo.
 The sign-in screen uses public sample credentials and a tab-local identity, not server authentication. See `docs/frontend-sign-in.md`; never put real passwords into the demo account configuration.
+Team configuration is separate under `kws-crm-team-preview-v1`; keep passwords/provider tokens out of it and preserve CRM/workbook/backup contracts. Messaging and invitation previews never deliver externally. Roles control frontend modules; the backend must enforce actual access.
 Do not treat it as a secure multi-user CRM.
 Do not remove existing data features without approval.

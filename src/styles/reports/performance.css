@@ -1,0 +1,95 @@
+.report-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(112deg, #fff, #f7faf5);
+  padding: 28px 31px;
+}
+.report-head h2 {
+  font-size: 20px;
+  color: #344c3d;
+  margin: 8px 0;
+}
+.report-head p {
+  margin: 0;
+  font-size: 11px;
+}
+.performance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 17px;
+}
+.goals {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.goal-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 9px;
+}
+.goal-top strong {
+  font-size: 11px;
+  color: #516e5a;
+}
+.goal-top span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #85988c;
+  font-size: 10px;
+}
+.goal-top input {
+  max-width: 83px;
+  border: 1px solid #e8ede6;
+  border-radius: 7px;
+  padding: 6px;
+  font-size: 9px;
+}
+.goal-track {
+  height: 7px;
+  background: #eef2ed;
+  border-radius: 20px;
+  overflow: hidden;
+}
+.goal-track div {
+  background: #83a38b;
+  height: 100%;
+  border-radius: 20px;
+}
+.goal small {
+  display: block;
+  margin-top: 6px;
+  color: #a1aea2;
+  font-size: 9px;
+}
+.perf-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  height: 255px;
+  padding: 15px 0 0;
+}
+.perf-bar-wrap {
+  flex: 1;
+  max-width: 33px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.perf-bar {
+  min-height: 3px;
+  width: 100%;
+  border-radius: 5px 5px 0 0;
+  background: #6a9179;
+}
+.perf-bar-wrap small {
+  color: #a4b0a6;
+  font-size: 9px;
+}

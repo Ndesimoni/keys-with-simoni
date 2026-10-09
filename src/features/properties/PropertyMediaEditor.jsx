@@ -5,6 +5,7 @@ import { Icon } from '../../components/ui/Icon.jsx';
 import { Badge } from '../../components/ui/Badge.jsx';
 import { AMENITIES } from '../../config/properties.js';
 import { amenityList } from '../../lib/properties.js';
+import { OverflowList } from '../../components/ui/OverflowList.jsx';
 
 export function PropertyMediaEditor({ form, setForm, uploading, setUploading }) {
   const [mediaError, setMediaError] = useState('');
@@ -49,9 +50,13 @@ export function PropertyMediaEditor({ form, setForm, uploading, setUploading }) 
         </div>
         <Badge tone="slate">Browser storage</Badge>
       </div>
-      <div className="editor-photo-grid">
-        {mediaPhotos(form).map((file, i) => (
-          <div className="editor-photo" key={i}>
+      <OverflowList
+        mode="all"
+        items={mediaPhotos(form)}
+        label="Property photos"
+        listClassName="editor-photo-grid"
+        renderItem={(file, i) => (
+          <div className="editor-photo">
             <img src={file.src} alt={file.name} />
             {i === 0 && <span className="cover-marker">Cover photo</span>}
             <button
@@ -76,21 +81,23 @@ export function PropertyMediaEditor({ form, setForm, uploading, setUploading }) 
               </button>
             )}
           </div>
-        ))}
-        <label className="media-upload-tile">
-          <Icon name="image" size={22} />
-          <strong>{uploading ? 'Processing...' : 'Add photos'}</strong>
-          <small>JPG, PNG, WebP · up to 8</small>
-          <input
-            aria-label="Upload property photos"
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            multiple
-            disabled={uploading}
-            onChange={(e) => addMedia(e, 'photo')}
-          />
-        </label>
-      </div>
+        )}
+        after={
+          <label className="media-upload-tile">
+            <Icon name="image" size={22} />
+            <strong>{uploading ? 'Processing...' : 'Add photos'}</strong>
+            <small>JPG, PNG, WebP · up to 8</small>
+            <input
+              aria-label="Upload property photos"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              disabled={uploading}
+              onChange={(e) => addMedia(e, 'photo')}
+            />
+          </label>
+        }
+      />
       <div className="editor-floorplans">
         <div className="editor-subheading">
           <Icon name="layers" size={17} /> Floor plans <span>Up to 3 files</span>
@@ -131,11 +138,16 @@ export function PropertyMediaEditor({ form, setForm, uploading, setUploading }) 
       </p>
       <div className="amenity-picker">
         <strong>Quick-add amenities</strong>
-        <div className="amenity-chip-list">
-          {AMENITIES.map((name) => (
+        <OverflowList
+          mode="scroll"
+          className="amenity-options-list"
+          items={AMENITIES}
+          getKey={(name) => name}
+          label="Amenity options"
+          listClassName="amenity-chip-list"
+          renderItem={(name) => (
             <button
               type="button"
-              key={name}
               className={amenityList(form).includes(name) ? 'checked' : ''}
               aria-pressed={amenityList(form).includes(name)}
               onClick={() =>
@@ -152,8 +164,8 @@ export function PropertyMediaEditor({ form, setForm, uploading, setUploading }) 
             >
               {amenityList(form).includes(name) && <Icon name="check" size={12} />} {name}
             </button>
-          ))}
-        </div>
+          )}
+        />
       </div>
     </section>
   );

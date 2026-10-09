@@ -32,3 +32,10 @@ export function calendarDefaults(module) {
       }
     : {};
 }
+
+/** Keep local appointment fields while Google integration is deferred. */
+export function localScheduleFields(module) {
+  return calendarFields(module).filter(
+    (field) => !['calendar_enabled', 'calendar_reminder', 'calendar_invite'].includes(field.key),
+  );
+}

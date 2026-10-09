@@ -1,0 +1,58 @@
+.date-result {
+  min-width: 130px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.date-result strong {
+  color: #365342;
+  font-size: 24px;
+}
+.date-result span {
+  color: #9fa9a2;
+  font-size: 10px;
+}
+.result-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  background: white;
+  border: 0;
+  border-bottom: 1px solid #eef0ef;
+  text-align: left;
+  padding: 12px 0;
+}
+.result-icon {
+  height: 37px;
+  width: 37px;
+  display: grid;
+  place-items: center;
+  background: #edf2ee;
+  color: #829d89;
+  border-radius: 10px;
+}
+.result-row > div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 5px;
+}
+.result-row strong {
+  color: #3b5747;
+  font-size: 11px;
+}
+.result-row small {
+  color: #9aa79d;
+  font-size: 10px;
+}
+.result-date {
+  flex: 0 0 auto !important;
+  color: #82968a;
+  display: block !important;
+  font-size: 10px;
+}
+.result-row > svg {
+  color: #a6b5aa;
+}

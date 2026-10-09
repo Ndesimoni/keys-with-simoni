@@ -1,6 +1,6 @@
 # Getting started in VS Code
 
-The active application is a React 18 + Vite project. It includes 19 screens covering the original workbook and calendar scheduling, light/dark mode, property media, Excel interoperability, and browser-local records.
+The active application is a React 18 + Vite project. It includes 19 CRM screens and four settings/workspace screens covering the original workbook, local schedules, messaging previews, team access, private workspaces, activity history, light/dark mode, property media, Excel interoperability, and browser-local records. Google Calendar is deferred while frontend development continues.
 
 ## Start the app
 
@@ -11,7 +11,7 @@ The active application is a React 18 + Vite project. It includes 19 screens cove
 5. Run `npm run dev`.
 6. Open <http://localhost:5173>.
 
-Sign in using `aidah@keyswithsimoni.test` or `simoni@keyswithsimoni.test` and the demo password `SimoniDemo2026!`. The two profiles are Admins with full access. These sample emails will be replaced when the real addresses are supplied. See [Frontend sign-in](frontend-sign-in.md) for preview behavior and the future authentication boundary.
+Initially, sign in using `aidah@keyswithsimoni.test` or `simoni@keyswithsimoni.test` and the demo password `SimoniDemo2026!`. The two profiles start as Admins with full access. **Settings → Team & access** previews choosing the Super Admin, invitations, required member phone numbers, role assignments and separate messaging permissions. After setup, invited members activate before signing in. See [Team and messaging preview](team-access-preview.md) and [Frontend sign-in](frontend-sign-in.md).
 
 Save source changes to see Vite update the browser. For Chrome debugging, choose **Run and Debug → Run CRM in Chrome**. Build and test tasks are available under **Terminal → Run Task**.
 
@@ -59,11 +59,11 @@ Or use an installed Google Chrome:
 PLAYWRIGHT_CHANNEL=chrome npm run test:e2e
 ```
 
-The browser suite automatically starts its own Vite server on port 5174 and a Rust calendar service on port 8787, then stops them afterward. Rust 1.89 or later is required. Google credentials are disabled in tests. `npm run preview` serves the production build on port 4173. See [Google Calendar setup](google-calendar.md) to connect a real account.
+The browser suite automatically starts its own Vite server on port 5174, then stops it afterward. No Rust service or Google credentials are required for frontend checks. `npm run preview` serves the production build on port 4173.
 
 ## Existing records and backups
 
-The app retains its existing browser storage keys and backup formats. Browser records remain local to the browser and origin where they were entered. Changing browser, hostname, or port creates a separate storage workspace.
+The previous shared records remain under the existing storage key in the Super Admin organisation workspace. Each member has separate record/target keys; Aidah's personal records are fresh fictional examples, and other profiles start empty. The backup format stays compatible. Browser records remain local to the browser and origin where they were entered. Changing browser, hostname, or port creates a separate storage workspace. See [Private workspaces and team activity](private-workspaces.md).
 
 Use **Data & export → Full backup with photos (JSON)** to preserve records and attachments. Excel exports include listing fields and reports, while full JSON backups include photos and floor plans.
 

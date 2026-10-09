@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button } from './Button.jsx';
 import { downloadBlob } from '../../services/files/download.js';
+import { Link } from 'react-router-dom';
 
-export function StorageRecovery({ recovery, retryLoad, startEmpty }) {
+export function StorageRecovery({ recovery, retryLoad, startEmpty, returnLink }) {
   return (
     <main className="recovery-page">
       <section className="panel recovery-panel" aria-labelledby="recovery-title">
@@ -13,6 +14,11 @@ export function StorageRecovery({ recovery, retryLoad, startEmpty }) {
           them, or retry after fixing the browser storage.
         </p>
         <div className="recovery-actions">
+          {returnLink && (
+            <Link className="btn btn-light" to={returnLink}>
+              Return to my workspace
+            </Link>
+          )}
           {recovery.raw !== null && (
             <Button
               variant="light"

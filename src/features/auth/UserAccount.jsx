@@ -2,11 +2,12 @@ import React, { useEffect, useId, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from '../../components/ui/Icon.jsx';
 import { useSession } from '../../hooks/useSession.js';
-import { useRecords, useWorkspaceActions } from '../../hooks/useWorkspace.js';
+import { useWorkspaceActions } from '../../hooks/useWorkspace.js';
+import { useTeam } from '../../hooks/useTeam.js';
 
 export function UserAccount() {
   const { user } = useSession();
-  const { storageError } = useRecords();
+  const { team } = useTeam();
   const { fileBusy } = useWorkspaceActions();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState('');
@@ -64,8 +65,17 @@ export function UserAccount() {
           <strong>{user.name}</strong>
           <small>{user.email}</small>
           <div className="account-role">
-            <Icon name="shield" size={14} /> {user.role} · Full access
+            <Icon name="shield" size={14} /> {user.role} ·{' '}
+            {Object.values(user.permissions).every(Boolean) ? 'Full access' : 'Assigned access'}
           </div>
+          <Link className="account-link" to="/my-profile">
+            My profile & messaging
+          </Link>
+          {(!team.configured || user.managesTeam) && (
+            <Link className="account-link" to="/team-access">
+              Team & access
+            </Link>
+          )}
           <Link
             to="/sign-out"
             className="account-sign-out"
@@ -76,13 +86,7 @@ export function UserAccount() {
                 setError('Please wait until the file operation finishes.');
                 return;
               }
-              if (
-                storageError &&
-                !confirm(
-                  'Your latest changes could not be saved. Export a full backup before signing out. Sign out and discard those changes?',
-                )
-              )
-                event.preventDefault();
+              setOpen(false);
             }}
           >
             <Icon name="logout" size={17} /> Sign out

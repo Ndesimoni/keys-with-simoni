@@ -2,6 +2,8 @@ import { Icon } from '../ui/Icon.jsx';
 import { labels } from '../../config/navigation.js';
 import React from 'react';
 import { UserAccount } from '../../features/auth/UserAccount.jsx';
+import { WorkspaceSearch } from './WorkspaceSearch.jsx';
+import { useSession } from '../../hooks/useSession.js';
 import {
   useRecords,
   usePreferences,
@@ -10,10 +12,11 @@ import {
 } from '../../hooks/useWorkspace.js';
 
 function Header() {
+  const { user } = useSession();
   const { summary } = useRecords();
   const { settings, setSettings } = usePreferences();
   const { route, navigate } = useNavigation();
-  const { setMobileNav, mobileNav, query, setQuery } = useWorkspaceView();
+  const { setMobileNav, mobileNav } = useWorkspaceView();
   return (
     <header className="topbar">
       <div className="top-left">
@@ -32,21 +35,7 @@ function Header() {
           <strong>{labels[route] || route}</strong>
         </div>
       </div>
-      <div className="top-center">
-        <Icon name="search" size={17} />
-        <input
-          id="global-search"
-          aria-label="Search CRM records"
-          placeholder="Search your workspace  ⌘ K"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && query) {
-              navigate('Client desk', e.currentTarget.value);
-            }
-          }}
-        />
-      </div>
+      {user.permissions.relationships && <WorkspaceSearch />}
       <div className="top-actions">
         <button
           className="theme-switch"
@@ -64,14 +53,16 @@ function Header() {
         <span className="local-tag">
           <span /> LOCAL WORKSPACE
         </span>
-        <button
-          aria-label="View due tasks"
-          className="icon-btn notif"
-          onClick={() => navigate('Follow-ups')}
-        >
-          <Icon name="bell" size={20} />
-          {summary.dueTasks.length > 0 && <b />}
-        </button>
+        {user.permissions.schedule && (
+          <button
+            aria-label="View due tasks"
+            className="icon-btn notif"
+            onClick={() => navigate('Follow-ups')}
+          >
+            <Icon name="bell" size={20} />
+            {summary.dueTasks.length > 0 && <b />}
+          </button>
+        )}
         <UserAccount />
       </div>
     </header>

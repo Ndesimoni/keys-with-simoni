@@ -8,6 +8,8 @@ import { Empty } from '../../components/ui/Empty.jsx';
 import { Button } from '../../components/ui/Button.jsx';
 import React, { useEffect } from 'react';
 import { useRecords, useWorkspaceView, useWorkspaceActions } from '../../hooks/useWorkspace.js';
+import { useSession } from '../../hooks/useSession.js';
+import { hasMessagingAccess } from '../messaging/model.js';
 
 function RecordTable({
   module,
@@ -21,7 +23,8 @@ function RecordTable({
 }) {
   const { data } = useRecords();
   const { page, setSort, setPage, sort, query } = useWorkspaceView();
-  const { dispatchRow, add } = useWorkspaceActions();
+  const { dispatchRow, add, startMessage } = useWorkspaceActions();
+  const { user } = useSession();
 
   const columns = schema(module);
   const pick = (columnNames || preferredCols[module] || [])
@@ -91,6 +94,21 @@ function RecordTable({
                   </td>
                 ))}
                 <td>
+                  {module === 'Clients' && (
+                    <button
+                      type="button"
+                      className="row-link message-row-action"
+                      aria-label={`Start message with ${r.full_name || r.client_id}`}
+                      title="Start message"
+                      disabled={!hasMessagingAccess(user)}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        startMessage(r);
+                      }}
+                    >
+                      <Icon name="chat" size={17} />
+                    </button>
+                  )}
                   <button
                     className="row-link"
                     aria-label={`Open record ${get(r, columns[0].name)}`}

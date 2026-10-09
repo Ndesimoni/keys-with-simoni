@@ -12,6 +12,7 @@ export function useWorkspaceViewState(route, initialQuery = '') {
   const [toast, setToast] = useState('');
   const [showMenu, setShowMenu] = useState(false);
   const [detail, setDetail] = useState(null);
+  const [messageDraft, setMessageDraft] = useState(null);
   const [viewMode, setViewMode] = useState('cards');
   const [propertyFilters, setPropertyFilters] = useState(defaultPropertyFilters);
   const [selectedClient, setSelectedClient] = useState('CL-001');
@@ -36,14 +37,11 @@ export function useWorkspaceViewState(route, initialQuery = '') {
     setMobileNav(false);
     setDetail(null);
     setDrawer(null);
+    setMessageDraft(null);
     setShowMenu(false);
   }, [route, initialQuery]);
   useEffect(() => {
     const onKey = (event) => {
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
-        event.preventDefault();
-        document.getElementById('global-search')?.focus();
-      }
       if (event.key === 'Escape') {
         setShowMenu(false);
         setMobileNav(false);
@@ -72,6 +70,8 @@ export function useWorkspaceViewState(route, initialQuery = '') {
       setShowMenu,
       detail,
       setDetail,
+      messageDraft,
+      setMessageDraft,
       viewMode,
       setViewMode,
       propertyFilters,
@@ -93,6 +93,7 @@ export function useWorkspaceViewState(route, initialQuery = '') {
       toast,
       showMenu,
       detail,
+      messageDraft,
       viewMode,
       propertyFilters,
       selectedClient,

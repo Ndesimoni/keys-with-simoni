@@ -1,0 +1,35 @@
+.timeline {
+  display: flex;
+  flex-direction: column;
+}
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  min-height: 68px;
+}
+.timeline-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: #eef3ef;
+  color: #71957c;
+  display: grid;
+  place-items: center;
+}
+.timeline-item > div {
+  flex: 1;
+}
+.timeline-item strong {
+  font-size: 11px;
+  color: #3e5848;
+}
+.timeline-item p {
+  font-size: 10px;
+  color: #9aa89f;
+  margin: 5px 0;
+}
+.timeline-item time {
+  font-size: 10px;
+  color: #a1aaa4;
+}

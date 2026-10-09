@@ -9,7 +9,10 @@ test('section URLs survive reload, support browser history, and recover from unk
   await page.goto('/#/properties');
   await expect(page.locator('.page-heading h1')).toHaveText('Property portfolio');
   await page.reload();
-  await expect(page.locator('.modern-property-card')).toHaveCount(13);
+  await expect(page.locator('.modern-property-card')).toHaveCount(12);
+  await expect(page.getByRole('navigation', { name: 'Property pages', exact: true })).toContainText(
+    'Page 1 of 2',
+  );
   await page
     .locator('.sidebar .nav-item')
     .filter({ hasText: /^Clients$/ })
@@ -58,7 +61,7 @@ test('keyboard drawers contain focus, restore the opener, validate fields and gu
   await expect
     .poll(() =>
       page.evaluate(() =>
-        JSON.parse(localStorage.getItem('kws-crm-v1')).data.Clients.some(
+        JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah')).data.Clients.some(
           (row) => row.client_id === 'CL-KEYBOARD',
         ),
       ),
@@ -71,7 +74,9 @@ test('global search opens the matching client profile and retains its query on r
 }) => {
   await page.goto('/#/properties');
   const names = await page.evaluate(() =>
-    JSON.parse(localStorage.getItem('kws-crm-v1')).data.Clients.map((row) => row.full_name),
+    JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah')).data.Clients.map(
+      (row) => row.full_name,
+    ),
   );
   const name = names[1];
   await page.getByRole('textbox', { name: 'Search CRM records' }).fill(name);
@@ -90,10 +95,12 @@ test('malformed saved data is preserved through reload and can be downloaded bef
   page,
 }, testInfo) => {
   await page.goto('/');
-  await page.evaluate(() => localStorage.setItem('kws-crm-v1', '{unreadable existing records'));
+  await page.evaluate(() =>
+    localStorage.setItem('kws-crm-v1:workspace:aidah', '{unreadable existing records'),
+  );
   await page.reload();
   await expect(page.getByRole('heading', { name: 'Recover your workspace' })).toBeVisible();
-  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1'))).toBe(
+  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1:workspace:aidah'))).toBe(
     '{unreadable existing records',
   );
   const download = page.waitForEvent('download');
@@ -108,7 +115,9 @@ test('malformed saved data is preserved through reload and can be downloaded bef
   await expect(page.locator('.page-heading h1')).toHaveText('Overview');
   await expect
     .poll(() =>
-      page.evaluate(() => JSON.parse(localStorage.getItem('kws-crm-v1')).data.Clients.length),
+      page.evaluate(
+        () => JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah')).data.Clients.length,
+      ),
     )
     .toBe(0);
 });
@@ -123,9 +132,9 @@ test('invalid JSON backup and non-workbook imports leave current records intact'
   });
   await page.goto('/');
   await expect
-    .poll(() => page.evaluate(() => Boolean(localStorage.getItem('kws-crm-v1'))))
+    .poll(() => page.evaluate(() => Boolean(localStorage.getItem('kws-crm-v1:workspace:aidah'))))
     .toBe(true);
-  const before = await page.evaluate(() => localStorage.getItem('kws-crm-v1'));
+  const before = await page.evaluate(() => localStorage.getItem('kws-crm-v1:workspace:aidah'));
   const invalid = {
     format: 'keys-with-simoni-full-backup',
     version: 2,
@@ -145,7 +154,9 @@ test('invalid JSON backup and non-workbook imports leave current records intact'
     buffer: await zip.generateAsync({ type: 'nodebuffer' }),
   });
   await expect.poll(() => alerts.length).toBe(2);
-  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1'))).toBe(before);
+  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1:workspace:aidah'))).toBe(
+    before,
+  );
   expect(alerts[0]).toContain('invalid record');
   expect(alerts[1]).toContain('missing');
 });
@@ -187,7 +198,7 @@ test('original prefixed Excel template parses and imports rich text, numeric zer
   });
   await expect(page.locator('.toast')).toContainText('Imported 1 records from Excel');
   const saved = await page.evaluate(
-    () => JSON.parse(localStorage.getItem('kws-crm-v1')).data.Clients[0],
+    () => JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah')).data.Clients[0],
   );
   expect(saved.full_name).toBe('Template Client');
   expect(saved.maximum_budget_aed).toBe(0);
@@ -230,9 +241,9 @@ test('real error boundaries catch render failures and allow retry without cleari
 }) => {
   await page.goto('/');
   await expect
-    .poll(() => page.evaluate(() => Boolean(localStorage.getItem('kws-crm-v1'))))
+    .poll(() => page.evaluate(() => Boolean(localStorage.getItem('kws-crm-v1:workspace:aidah'))))
     .toBe(true);
-  const before = await page.evaluate(() => localStorage.getItem('kws-crm-v1'));
+  const before = await page.evaluate(() => localStorage.getItem('kws-crm-v1:workspace:aidah'));
   await page.evaluate(async () => {
     const React = (await import('/node_modules/.vite/deps/react.js')).default;
     const { default: ReactDOM } = await import('/node_modules/.vite/deps/react-dom_client.js');
@@ -257,5 +268,7 @@ test('real error boundaries catch render failures and allow retry without cleari
   await page.evaluate(() => window.repairTestFeature());
   await page.getByRole('button', { name: 'Try again' }).click();
   await expect(page.getByText('Recovered feature', { exact: true })).toBeVisible();
-  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1'))).toBe(before);
+  expect(await page.evaluate(() => localStorage.getItem('kws-crm-v1:workspace:aidah'))).toBe(
+    before,
+  );
 });

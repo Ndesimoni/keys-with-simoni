@@ -1,0 +1,78 @@
+@media (max-width: 750px) {
+  :root[data-theme] .directory-top {
+    flex-direction: row;
+    align-items: center;
+    padding: 16px;
+    gap: 12px;
+  }
+  :root[data-theme] .directory-count p {
+    display: none;
+  }
+  :root[data-theme] .directory-count {
+    gap: 10px;
+  }
+  :root[data-theme] .directory-count strong {
+    font-size: 13px;
+  }
+  :root[data-theme] .large-count {
+    font-size: 28px;
+  }
+  :root[data-theme] .directory-top > .btn {
+    padding-inline: 12px;
+    flex-shrink: 0;
+  }
+  :root[data-theme] .inventory-results-bar {
+    align-items: stretch;
+    gap: 12px;
+  }
+  :root[data-theme] .inventory-tools {
+    width: 100%;
+  }
+  :root[data-theme] .inventory-search {
+    width: auto;
+    flex: 1;
+    min-width: 0;
+  }
+  :root[data-theme] .inventory-filters {
+    padding: 12px 16px;
+  }
+  :root[data-theme] .inventory-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  :root[data-theme] .property-purpose-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  :root[data-theme] .purpose-pill {
+    min-height: 44px;
+  }
+  :root[data-theme] .modal-centered > .drawer {
+    border: 0;
+    border-radius: 0;
+  }
+  :root[data-theme] :is(.drawer-top, .drawer-body, .form-stepper) {
+    padding: 16px;
+  }
+  :root[data-theme] .drawer-footer {
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+  }
+  :root[data-theme]
+    :is(
+      .field input,
+      .field select,
+      .field textarea,
+      .inventory-field input,
+      .inventory-field select,
+      .team-fields input,
+      .team-fields textarea,
+      .team-fields select
+    ) {
+    font-size: 16px;
+  }
+  :root[data-theme] .main-footer {
+    display: block;
+    line-height: 1.8;
+  }
+  :root[data-theme] .main-footer span {
+    display: block;
+  }
+}

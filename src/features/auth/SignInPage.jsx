@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BrandMark } from '../../components/layout/BrandMark.jsx';
 import { Button } from '../../components/ui/Button.jsx';
 import { Icon } from '../../components/ui/Icon.jsx';
@@ -7,8 +7,11 @@ import { demoAdmins, DEMO_PASSWORD } from '../../config/demoAccounts.js';
 import { useSession } from '../../hooks/useSession.js';
 import { useWorkspacePreferences } from '../../hooks/useWorkspacePreferences.js';
 import { validateSignIn } from '../../services/auth/demoAuth.js';
+import { useTeam } from '../../hooks/useTeam.js';
+import { previewLink } from '../team/model.js';
 
 export function SignInPage() {
+  const { team } = useTeam();
   const { signIn } = useSession();
   const navigate = useNavigate();
   const { settings, setSettings, preferencesError } = useWorkspacePreferences();
@@ -192,13 +195,19 @@ export function SignInPage() {
             </form>
             <div className="sign-in-demo" aria-label="Demo sign-in details">
               <strong>Frontend preview · Demo accounts</strong>
-              <p>Use these sample details to explore the CRM. Both admins have full access.</p>
-              {demoAdmins.map((admin) => (
-                <div className="sign-in-demo-account" key={admin.id}>
-                  <span>{admin.name}</span>
-                  <code>{admin.email}</code>
-                </div>
-              ))}
+              <p>
+                {team.configured
+                  ? 'All preview accounts use this public password. Your assigned role controls your CRM access.'
+                  : 'Use these sample details to explore the CRM. Both admins have full access.'}
+              </p>
+              {demoAdmins
+                .map((sample) => team.members.find((member) => member.id === sample.id) || sample)
+                .map((admin) => (
+                  <div className="sign-in-demo-account" key={admin.id}>
+                    <span>{admin.name}</span>
+                    <code>{admin.email}</code>
+                  </div>
+                ))}
               <div className="sign-in-demo-password">
                 <span>Demo password</span>
                 <code>{DEMO_PASSWORD}</code>
@@ -207,6 +216,25 @@ export function SignInPage() {
                 Demo sign-in only. Real account verification will be added with the backend.
               </small>
             </div>
+            {!team.configured && (
+              <Link className="team-sign-in-link" to="/setup-preview">
+                Preview Super Admin setup
+              </Link>
+            )}
+            {team.members.find(
+              (member) =>
+                member.email === email.trim().toLowerCase() && member.status === 'invited',
+            ) && (
+              <Link
+                className="team-sign-in-link"
+                to={previewLink(
+                  'invite',
+                  team.members.find((member) => member.email === email.trim().toLowerCase()),
+                )}
+              >
+                Open my invitation preview
+              </Link>
+            )}
             {preferencesError && (
               <p className="field-error" role="status">
                 {preferencesError}

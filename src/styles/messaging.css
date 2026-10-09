@@ -1,0 +1,416 @@
+.messages-page {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+.messages-intro {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: center;
+}
+.messages-intro h2 {
+  margin: 12px 0;
+  font-size: 24px;
+}
+.messages-intro p {
+  margin: 0;
+  max-width: 620px;
+}
+.messages-page p {
+  color: var(--muted-dark);
+  line-height: 1.8;
+}
+.messages-intro > .btn {
+  flex-shrink: 0;
+}
+.message-channel-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.message-channel-cards h3 {
+  font-size: 18px;
+  margin: 18px 0 8px;
+}
+.message-channel-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  color: var(--gold);
+}
+.message-channel-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 11px;
+  border-top: 1px solid var(--line);
+  margin: 20px 0;
+  padding-top: 16px;
+}
+.messages-guide h3 {
+  font-size: 16px;
+  margin: 0 0 24px;
+}
+.messages-guide ol {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  padding: 0;
+  margin: 0 0 25px;
+  list-style: none;
+  counter-reset: message-step;
+}
+.messages-guide li {
+  display: grid;
+  gap: 10px;
+  counter-increment: message-step;
+}
+.messages-guide li::before {
+  content: '0' counter(message-step);
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 12px;
+}
+.messages-guide li strong {
+  font-size: 12px;
+}
+.messages-guide li span {
+  color: var(--muted-dark);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.message-channel-choice {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+.message-channel-choice legend {
+  margin-bottom: 14px;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 700;
+}
+.message-channel-choice label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  cursor: pointer;
+  min-width: 0;
+}
+.message-channel-choice label.selected {
+  border-color: var(--gold);
+}
+.message-channel-choice label:has(input:disabled) {
+  cursor: not-allowed;
+}
+.message-channel-choice input {
+  accent-color: var(--gold);
+  flex-shrink: 0;
+  margin: 0;
+}
+.message-channel-choice svg {
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.message-channel-choice strong {
+  display: block;
+  font-size: 12px;
+}
+.message-channel-choice small {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted-dark);
+  font-size: 10px;
+  line-height: 1.65;
+}
+.message-client-origin {
+  color: var(--muted-dark);
+  line-height: 1.8;
+  margin: 0;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.message-client-origin strong {
+  color: var(--ink);
+}
+.message-recipient-control,
+.message-recipient-picker {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.message-recipient-picker {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+}
+.message-picker-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.message-picker-heading strong,
+.message-recipient-picker > label {
+  font-size: 12px;
+  font-weight: 600;
+}
+.message-recipient-picker .search-small {
+  width: 100%;
+  min-width: 0;
+}
+.message-recipient-picker .search-small input {
+  min-width: 0;
+  font-size: 12px;
+}
+.message-recipient-picker .search-small:focus-within {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.message-recipient-browse {
+  justify-self: start;
+}
+.message-recipient-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.message-recipient-filters button {
+  padding: 9px 12px;
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--muted-dark);
+  background: var(--panel);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.message-recipient-filters button[aria-pressed='true'] {
+  color: var(--ink);
+  border-color: var(--gold);
+  font-weight: 700;
+}
+.message-picker-count,
+.message-picker-empty {
+  font-size: 11px;
+  color: var(--muted-dark);
+  line-height: 1.7;
+  margin: 0;
+}
+.message-recipient-results {
+  display: grid;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--panel);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.message-recipient-results > li + li {
+  border-top: 1px solid var(--line);
+}
+.message-recipient-option {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  align-items: center;
+  text-align: left;
+  padding: 13px;
+  background: transparent;
+  color: var(--ink);
+  border: 0;
+  font: inherit;
+  cursor: pointer;
+}
+.message-recipient-option:not(:disabled):hover {
+  background: var(--bg);
+}
+.message-recipient-option:disabled {
+  cursor: default;
+  opacity: 1;
+}
+.message-recipient-option:focus-visible {
+  outline-offset: -3px;
+}
+.message-recipient-option:disabled:not(.selected) > svg {
+  color: var(--muted-dark);
+}
+.message-recipient-option svg {
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.message-recipient-person {
+  min-width: 0;
+  flex: 1;
+  overflow-wrap: anywhere;
+}
+.message-recipient-person strong {
+  display: block;
+  font-size: 12px;
+}
+.message-recipient-person small {
+  display: block;
+  font-size: 11px;
+  margin-top: 5px;
+  color: var(--muted-dark);
+}
+.message-recipient-category {
+  display: block;
+  font-size: 10px;
+  line-height: 1.65;
+  margin-top: 5px;
+  color: var(--muted-dark);
+}
+.message-recipient-state {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--muted-dark);
+}
+.message-recipient-option.selected .message-recipient-state {
+  color: var(--gold);
+}
+.message-recipient-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.message-recipient-chips li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  min-width: 0;
+  padding: 6px 8px 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg);
+  font-size: 11px;
+}
+.message-recipient-chips li > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.message-recipient-chips strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.message-recipient-chips strong + span {
+  color: var(--muted-dark);
+}
+.message-recipient-chips button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--muted-dark);
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.message-recipient-chips button:hover {
+  color: var(--ink);
+  background: var(--panel);
+}
+.message-recipient-review {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+.message-recipient-review > span {
+  color: var(--muted-dark);
+  font-size: 11px;
+}
+.message-recipient-review ul {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  max-height: 140px;
+  overflow-y: auto;
+}
+.message-recipient-review li {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+  max-width: 100%;
+}
+.record-message-action {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  margin: 0 0 22px;
+}
+.record-message-action small {
+  color: var(--muted-dark);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.data-table .message-row-action {
+  margin-right: 7px;
+}
+.data-table td:has(.message-row-action) {
+  white-space: nowrap;
+}
+@media (max-width: 750px) {
+  .messages-intro {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .message-channel-cards,
+  .messages-guide ol {
+    grid-template-columns: 1fr;
+  }
+  .message-channel-choice {
+    grid-template-columns: 1fr;
+  }
+  .message-channel-choice label {
+    padding: 14px;
+  }
+  .message-recipient-picker {
+    padding: 12px;
+  }
+  .message-recipient-picker .search-small input {
+    font-size: 16px;
+  }
+  .message-recipient-option {
+    gap: 9px;
+    padding: 12px 10px;
+  }
+  .message-recipient-state {
+    font-size: 10px;
+    flex-shrink: 1;
+    max-width: 62px;
+  }
+}

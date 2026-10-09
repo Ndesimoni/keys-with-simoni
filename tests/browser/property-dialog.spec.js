@@ -53,7 +53,7 @@ test('centered property dialogs retain media, edits, keyboard controls and close
   await page.mouse.click(8, 8);
   await expect(editor).toBeVisible();
   await expect(page.locator('#listing_title')).toHaveValue('Centered property workflow');
-  await page.getByRole('button', { name: 'Next', exact: true }).focus();
+  await editor.getByRole('button', { name: 'Next', exact: true }).focus();
   await page.keyboard.press('Tab');
   await expect(page.getByRole('button', { name: 'Close record editor' })).toBeFocused();
   page.once('dialog', (dialog) => dialog.dismiss());
@@ -84,7 +84,7 @@ test('centered property dialogs retain media, edits, keyboard controls and close
   await expect(add).toBeFocused();
   expect(
     await page.evaluate(() =>
-      JSON.parse(localStorage.getItem('kws-crm-v1')).data.Properties.some(
+      JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah')).data.Properties.some(
         (record) => record.property_id === 'PR-DISCARDED',
       ),
     ),
@@ -117,7 +117,9 @@ test('mobile property viewers and editors fill the screen with independently scr
   });
   expect(await body.evaluate((element) => element.scrollTop)).toBeGreaterThan(0);
   await expect(page.getByRole('button', { name: 'Close record editor' })).toBeInViewport();
-  await expect(page.getByRole('button', { name: 'Next', exact: true })).toBeInViewport();
+  await expect(
+    page.getByRole('dialog').getByRole('button', { name: 'Next', exact: true }),
+  ).toBeInViewport();
   await page.getByRole('button', { name: 'Cancel', exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);
   expect(await page.evaluate(() => document.body.style.overflow)).toBe('');

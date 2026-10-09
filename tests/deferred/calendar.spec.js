@@ -1,5 +1,6 @@
-import { expect, test } from './helpers/session.js';
-import { saveRecordForm } from './helpers/record-form.js';
+// Retained integration scenarios for the future Calendar phase; outside the frontend suite.
+import { expect, test } from '../browser/helpers/session.js';
+import { saveRecordForm } from '../browser/helpers/record-form.js';
 
 async function addMeeting(page, { invite = false } = {}) {
   await page.getByRole('button', { name: 'Schedule meeting', exact: true }).click();

@@ -24,9 +24,9 @@ const leads = [
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript((records) => {
-    if (!localStorage.getItem('kws-crm-v1'))
+    if (!localStorage.getItem('kws-crm-v1:workspace:aidah'))
       localStorage.setItem(
-        'kws-crm-v1',
+        'kws-crm-v1:workspace:aidah',
         JSON.stringify({ data: { Clients: records }, demo: false }),
       );
   }, leads);
@@ -169,7 +169,7 @@ test('lead creation, edits and deletion share one persistent client profile and 
   expect(
     await page.evaluate(
       () =>
-        JSON.parse(localStorage.getItem('kws-crm-v1')).data.Clients.filter(
+        JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah')).data.Clients.filter(
           (record) => record.client_id === 'CL-NEW-LEAD',
         ).length,
     ),
@@ -215,7 +215,7 @@ test('Leads source filters, themes and navigation stay accessible on mobile', as
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });
 
-test('More opens extra source filters and closes after selection, outside interaction or explicit dismissal', async ({
+test('More shows every source filter and closes after selection, outside interaction or explicit dismissal', async ({
   page,
 }, testInfo) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -223,18 +223,18 @@ test('More opens extra source filters and closes after selection, outside intera
   await page.goto('/#/leads');
   await page.getByRole('button', { name: 'Switch to light mode', exact: true }).click();
   await page.evaluate(() => {
-    const workspace = JSON.parse(localStorage.getItem('kws-crm-v1'));
+    const workspace = JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah'));
     workspace.data.Clients.push(
       { client_id: 'CL-S1', full_name: 'Bayut enquiry', lead_source: 'Bayut' },
       { client_id: 'CL-S2', full_name: 'Referral enquiry', lead_source: 'Referral' },
       { client_id: 'CL-S3', full_name: 'Website enquiry', lead_source: 'Website' },
     );
-    localStorage.setItem('kws-crm-v1', JSON.stringify(workspace));
+    localStorage.setItem('kws-crm-v1:workspace:aidah', JSON.stringify(workspace));
   });
   await page.reload();
   const sources = page.getByRole('group', { name: 'Filter leads by source', exact: true });
   const more = page.getByRole('button', { name: 'More', exact: true });
-  await expect(sources.getByRole('button')).toHaveCount(5);
+  await expect(sources.getByRole('button')).toHaveCount(6);
   await expect(more).toHaveAttribute('aria-expanded', 'false');
   await expect(sources.getByRole('button', { name: 'Website 1', exact: true })).toHaveCount(0);
   await page.screenshot({
@@ -243,12 +243,14 @@ test('More opens extra source filters and closes after selection, outside intera
   });
   await more.focus();
   await page.keyboard.press('Enter');
-  const menu = page.getByRole('group', { name: 'Additional lead sources', exact: true });
+  const menu = page.getByRole('group', { name: 'All lead sources', exact: true });
   await expect(menu).toBeVisible();
+  await expect(menu.getByRole('button', { name: 'Bayut 1', exact: true })).toBeVisible();
+  await expect(menu.getByRole('button', { name: 'Instagram 13', exact: true })).toBeVisible();
   await expect(more).toHaveAttribute('aria-expanded', 'true');
   await expect(more).toHaveAttribute('aria-controls', await menu.getAttribute('id'));
-  await expect(menu.getByRole('button', { name: 'Referral 1', exact: true })).toBeFocused();
-  await expect(sources.getByRole('button')).toHaveCount(5);
+  await expect(menu.getByRole('button', { name: 'All sources 18', exact: true })).toBeFocused();
+  await expect(sources.getByRole('button')).toHaveCount(6);
   const mobileMenuBox = await menu.boundingBox();
   expect(mobileMenuBox.x).toBeGreaterThanOrEqual(16);
   expect(mobileMenuBox.x + mobileMenuBox.width).toBeLessThanOrEqual(374);
@@ -274,7 +276,7 @@ test('More opens extra source filters and closes after selection, outside intera
   await search.click({ position: { x: searchBox.width - 8, y: 10 } });
   await expect(menu).toHaveCount(0);
   await expect(page.getByRole('textbox', { name: 'Search leads', exact: true })).toBeFocused();
-  await expect(sources.getByRole('button')).toHaveCount(5);
+  await expect(sources.getByRole('button')).toHaveCount(6);
   await expect(sources.getByRole('button', { name: 'Website 1', exact: true })).toHaveAttribute(
     'aria-pressed',
     'true',
@@ -287,7 +289,7 @@ test('More opens extra source filters and closes after selection, outside intera
   await expect(menu).toHaveCount(0);
   await expect(more).toBeFocused();
   await more.click();
-  await page.getByRole('button', { name: 'Close extra source filters', exact: true }).click();
+  await page.getByRole('button', { name: 'Close source filters', exact: true }).click();
   await expect(menu).toHaveCount(0);
   await expect(more).toBeFocused();
   await more.click();
@@ -295,7 +297,7 @@ test('More opens extra source filters and closes after selection, outside intera
   await expect(menu).toHaveCount(0);
   await expect(more).toHaveAttribute('aria-expanded', 'false');
   await more.click();
-  await sources.getByRole('button', { name: 'All sources 18', exact: true }).click();
+  await menu.getByRole('button', { name: 'All sources 18', exact: true }).click();
   await expect(menu).toHaveCount(0);
   await expect(page.locator('.table-footer')).toContainText('of 18 records');
 
@@ -312,16 +314,16 @@ test('More opens extra source filters and closes after selection, outside intera
   await page.getByRole('combobox', { name: 'Lead stage', exact: true }).focus();
   await expect(menu).toHaveCount(0);
 
-  // Exactly five filters need no disclosure control.
+  // Exactly six filters need no disclosure control.
   await page.evaluate(() => {
-    const workspace = JSON.parse(localStorage.getItem('kws-crm-v1'));
+    const workspace = JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah'));
     workspace.data.Clients = workspace.data.Clients.filter(
-      (record) => !['Referral', 'Website'].includes(record.lead_source),
+      (record) => record.lead_source !== 'Website',
     );
-    localStorage.setItem('kws-crm-v1', JSON.stringify(workspace));
+    localStorage.setItem('kws-crm-v1:workspace:aidah', JSON.stringify(workspace));
   });
   await page.reload();
-  await expect(sources.getByRole('button')).toHaveCount(5);
+  await expect(sources.getByRole('button')).toHaveCount(6);
   await expect(more).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

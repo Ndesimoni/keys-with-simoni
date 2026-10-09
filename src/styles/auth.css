@@ -328,7 +328,8 @@
 .account-role svg {
   color: var(--gold);
 }
-.account-sign-out {
+.account-sign-out,
+.account-link {
   display: flex;
   align-items: center;
   gap: 9px;
@@ -339,7 +340,8 @@
   font-weight: 600;
   font-size: 12px;
 }
-.account-sign-out:hover {
+.account-sign-out:hover,
+.account-link:hover {
   background: var(--hover);
 }
 .account-panel .field-error {

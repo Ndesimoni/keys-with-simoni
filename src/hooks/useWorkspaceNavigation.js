@@ -8,12 +8,19 @@ export function useWorkspaceNavigation() {
   const go = useNavigate();
   const route = routeName(pathname);
   const initialQuery = new URLSearchParams(search).get('q') || '';
+  const workspaceId = new URLSearchParams(search).get('workspace');
   const navigate = useCallback(
     (name, query = '') => {
-      go(routePath(name) + (query ? '?q=' + encodeURIComponent(query) : ''));
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      const params = new URLSearchParams();
+      if (workspaceId) params.set('workspace', workspaceId);
+      if (query) params.set('q', query);
+      go(routePath(name) + (params.size ? `?${params}` : ''));
+      window.scrollTo({
+        top: 0,
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      });
     },
-    [go],
+    [go, workspaceId],
   );
   useEffect(() => {
     document.title = `${labels[route] || route} · Keys with Simoni`;

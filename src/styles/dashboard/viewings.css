@@ -1,0 +1,63 @@
+.viewing-mini {
+  display: flex;
+  width: 100%;
+  gap: 11px;
+  align-items: center;
+  padding: 9px 0 14px;
+  border: 0;
+  border-bottom: 1px solid #f0f2ef;
+  background: white;
+  text-align: left;
+}
+.date-chip {
+  width: 38px;
+  height: 45px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background: #f6f0e7;
+  color: #a17b4f;
+}
+.date-chip b {
+  font-size: 15px;
+}
+.date-chip small {
+  font-size: 9px;
+  font-weight: 700;
+}
+.viewing-mini > div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  flex: 1;
+}
+.viewing-mini strong {
+  color: #395348;
+  font-size: 10.5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.viewing-mini span:not(.date-chip) {
+  color: #9ca7a2;
+  font-size: 9.5px;
+}
+.viewing-mini > svg {
+  color: #b5beb7;
+}
+.mini-quiet {
+  color: #abb3ad;
+  font-size: 11px;
+  padding: 20px 0;
+}
+.main-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 26px 0 10px;
+  color: #aab5ae;
+  font-size: 9px;
+}

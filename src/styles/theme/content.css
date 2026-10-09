@@ -1,0 +1,71 @@
+:root[data-theme='dark'] .breadcrumbs strong,
+:root[data-theme='dark'] .page-heading h1,
+:root[data-theme='dark'] .subhead-row h2,
+:root[data-theme='dark'] .section-top h2,
+:root[data-theme='dark'] .metric-value,
+:root[data-theme='dark'] .large-count,
+:root[data-theme='dark'] .directory-count strong,
+:root[data-theme='dark'] .table-sort,
+:root[data-theme='dark'] .property-content h3,
+:root[data-theme='dark'] .property-bottom strong,
+:root[data-theme='dark'] .desk-list-title h3,
+:root[data-theme='dark'] .desk-client strong,
+:root[data-theme='dark'] .client-mini strong,
+:root[data-theme='dark'] .profile-head h2,
+:root[data-theme='dark'] .label-value strong,
+:root[data-theme='dark'] .match-card h4,
+:root[data-theme='dark'] .match-foot strong,
+:root[data-theme='dark'] .timeline-item strong,
+:root[data-theme='dark'] .todo-row strong,
+:root[data-theme='dark'] .bar-label strong,
+:root[data-theme='dark'] .viewing-mini strong,
+:root[data-theme='dark'] .result-row strong,
+:root[data-theme='dark'] .report-head h2,
+:root[data-theme='dark'] .goal-top strong,
+:root[data-theme='dark'] .guide-card h3,
+:root[data-theme='dark'] .guide-import h2,
+:root[data-theme='dark'] .drawer-top h2,
+:root[data-theme='dark'] .detail-highlight strong,
+:root[data-theme='dark'] .detail-field strong,
+:root[data-theme='dark'] .inventory-filter-heading strong,
+:root[data-theme='dark'] .inventory-results-bar strong {
+  color: #e5eee6;
+}
+:root[data-theme='dark'] .top-center input,
+:root[data-theme='dark'] .search-small input,
+:root[data-theme='dark'] .date-select input,
+:root[data-theme='dark'] .field input,
+:root[data-theme='dark'] .field select,
+:root[data-theme='dark'] .field textarea,
+:root[data-theme='dark'] .goal-top input {
+  background: #23362c;
+  color: #e5eee6;
+  border-color: #3d5443;
+}
+:root[data-theme='dark'] input::placeholder,
+:root[data-theme='dark'] textarea::placeholder {
+  color: #789487;
+}
+:root[data-theme='dark'] .top-center input {
+  background: transparent;
+  border: 0;
+}
+:root[data-theme='dark'] .search-small input {
+  background: transparent;
+  border: 0;
+}
+:root[data-theme='dark'] .btn-light {
+  color: #dce8df;
+}
+:root[data-theme='dark'] .btn-outline-light {
+  border-color: #5d7667;
+  color: #eaf3ea;
+}
+:root[data-theme='dark'] .btn-danger-light {
+  background: #4a302c;
+  color: #efc8be;
+}
+:root[data-theme='dark'] .theme-switch:hover,
+:root[data-theme='dark'] .purpose-pill:not(.selected):hover {
+  background: #2c4034;
+}

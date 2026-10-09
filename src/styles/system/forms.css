@@ -1,0 +1,96 @@
+:root[data-theme] :is(.field label, .team-field > span, .team-field > label) {
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+}
+:root[data-theme]
+  :is(
+    .field input,
+    .field select,
+    .field textarea,
+    .inventory-field input,
+    .inventory-field select,
+    .team-fields input,
+    .team-fields select,
+    .team-fields textarea,
+    .activity-filters input,
+    .activity-filters select
+  ) {
+  min-height: 44px;
+  font-size: 14px;
+  border-radius: 9px;
+  padding: 10px 12px;
+  background: var(--panel);
+  color: var(--ink);
+  border-color: var(--line);
+}
+:root[data-theme]
+  :is(
+    .field input,
+    .field select,
+    .field textarea,
+    .inventory-field input,
+    .inventory-field select
+  ):focus {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+:root[data-theme] :is(.field [aria-invalid='true'], .team-fields [aria-invalid='true']) {
+  border-color: var(--danger);
+}
+:root[data-theme] :is(.field-error, .required) {
+  color: var(--danger);
+}
+:root[data-theme] .modal-centered > .drawer {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+:root[data-theme] .drawer-top {
+  padding: 24px;
+  background: var(--panel);
+}
+:root[data-theme] .drawer-top h2 {
+  font-size: 22px;
+  margin: 6px 0;
+}
+:root[data-theme] .drawer-body {
+  padding: 24px;
+  background: var(--panel);
+}
+:root[data-theme] .drawer-footer {
+  padding: 16px 24px;
+  background: var(--panel);
+}
+:root[data-theme] .form-stepper {
+  padding: 16px 24px;
+  background: var(--surface-subtle);
+}
+:root[data-theme] .form-step-list button {
+  min-height: 44px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--panel);
+  border-color: var(--line);
+}
+:root[data-theme] .form-step-list button[aria-current='step'] {
+  color: var(--ink);
+  font-weight: 600;
+  border-color: var(--focus);
+  background: var(--hover);
+}
+:root[data-theme] .form-step-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+:root[data-theme] .detail-field strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+:root[data-theme] .form-intro {
+  font-size: 13px;
+  padding: 12px 16px;
+}
+:root[data-theme] .form-step-actions {
+  flex-wrap: wrap;
+}

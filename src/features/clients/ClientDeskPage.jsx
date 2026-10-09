@@ -1,9 +1,10 @@
 import { selectClientDesk, selectClientTimeline } from './selectors.js';
-import React from 'react';
+import React, { useState } from 'react';
 import { Badge } from '../../components/ui/Badge.jsx';
 import { Button } from '../../components/ui/Button.jsx';
 import { Empty } from '../../components/ui/Empty.jsx';
 import { Icon } from '../../components/ui/Icon.jsx';
+import { OverflowList } from '../../components/ui/OverflowList.jsx';
 import { LabelValue } from '../../components/ui/LabelValue.jsx';
 import { TitleSection } from '../../components/ui/TitleSection.jsx';
 import { useRecords, useWorkspaceView, useWorkspaceActions } from '../../hooks/useWorkspace.js';
@@ -11,11 +12,17 @@ import { deriveLeadScore, leadTier } from '../../lib/crm.js';
 import { compactDate, today } from '../../lib/dates.js';
 import { AED } from '../../lib/format.js';
 import { get, initials } from '../../lib/records.js';
+import { useSession } from '../../hooks/useSession.js';
+import { MessagePreviewDialog } from '../messaging/MessagePreviewDialog.jsx';
+import { validPhone } from '../team/model.js';
+import { hasMessagingAccess, validEmail } from '../messaging/model.js';
 
 function ClientDeskPage() {
+  const { user } = useSession();
+  const [messageChannel, setMessageChannel] = useState(null);
   const { data } = useRecords();
   const { query, selectedClient, setQuery, setSelectedClient } = useWorkspaceView();
-  const { add, edit } = useWorkspaceActions();
+  const { add, edit, startMessage } = useWorkspaceActions();
 
   const { clients, client, matches } = selectClientDesk(data, query, selectedClient);
   const timeline = selectClientTimeline(data, client);
@@ -36,15 +43,26 @@ function ClientDeskPage() {
             onChange={(e) => setQuery(e.target.value)}
           />
         </div>
-        <div className="desk-clients">
-          {clients.map((c) => (
+        <OverflowList
+          mode="scroll"
+          className="client-picker-list"
+          key={query}
+          items={clients}
+          getKey={(c) => get(c, 'Client ID')}
+          activeKey={client && get(client, 'Client ID')}
+          label="Client desk contacts"
+          listClassName="desk-clients"
+          renderItem={(c, _index, { close }) => (
             <button
-              key={get(c, 'Client ID')}
+              type="button"
               className={
                 'desk-client ' +
                 (client && get(c, 'Client ID') === get(client, 'Client ID') ? 'selected' : '')
               }
-              onClick={() => setSelectedClient(get(c, 'Client ID'))}
+              onClick={() => {
+                setSelectedClient(get(c, 'Client ID'));
+                close();
+              }}
             >
               <span className="avatar">{initials(get(c, 'Full name'))}</span>
               <div>
@@ -53,9 +71,9 @@ function ClientDeskPage() {
               </div>
               <Icon name="chevron" size={16} />
             </button>
-          ))}
-          {!clients.length && <Empty title="No clients found" />}
-        </div>
+          )}
+        />
+        {!clients.length && <Empty title="No clients found" />}
         <Button variant="light" icon="plus" className="full-width" onClick={() => add('Clients')}>
           Add client
         </Button>
@@ -91,74 +109,124 @@ function ClientDeskPage() {
                 />
               </div>
             </section>
-            <section className="panel">
+            <section className="panel client-message-tools">
               <TitleSection
-                heading="Curated property matches"
-                caption="Filtered by location, purpose and maximum budget"
-                action={<span className="mini-count">{matches.length} matches</span>}
+                heading="Contact this client"
+                caption="Channel access is assigned by your Super Admin. Sender accounts are not connected."
               />
-              {matches.length ? (
-                <div className="match-grid">
-                  {matches.map((p) => (
-                    <div key={get(p, 'Property ID')} className="match-card">
-                      <div className="match-top">
-                        <span className="match-icon">
-                          <Icon name="building" size={18} />
-                        </span>
-                        <Badge>{get(p, 'Listing status')}</Badge>
+              <div className="team-inline-actions">
+                <Button
+                  icon="chat"
+                  disabled={!hasMessagingAccess(user)}
+                  onClick={() => startMessage(client)}
+                >
+                  Start message
+                </Button>
+                <Button
+                  variant="light"
+                  icon="chat"
+                  disabled={!user.channelAccess.whatsapp || !validPhone(client.phone)}
+                  onClick={() => setMessageChannel('whatsapp')}
+                >
+                  Preview WhatsApp message
+                </Button>
+                <Button
+                  variant="light"
+                  icon="note"
+                  disabled={!user.channelAccess.email || !validEmail(client.email)}
+                  onClick={() => setMessageChannel('email')}
+                >
+                  Preview client email
+                </Button>
+              </div>
+              <p className="team-muted">
+                WhatsApp: {user.channelAccess.whatsapp ? 'Allowed' : 'Not allowed'} · Email:{' '}
+                {user.channelAccess.email ? 'Allowed' : 'Not allowed'}. Previews do not send
+                messages.
+              </p>
+            </section>
+            {user.permissions.properties && (
+              <>
+                <section className="panel">
+                  <TitleSection
+                    heading="Curated property matches"
+                    caption="Filtered by location, purpose and maximum budget"
+                    action={<span className="mini-count">{matches.length} matches</span>}
+                  />
+                  {matches.length ? (
+                    <OverflowList
+                      mode="scroll"
+                      className="match-results-list"
+                      key={get(client, 'Client ID')}
+                      items={matches}
+                      getKey={(p) => get(p, 'Property ID')}
+                      label="Matching properties"
+                      listClassName="match-grid"
+                      renderItem={(p, _index, { close }) => (
+                        <div className="match-card">
+                          <div className="match-top">
+                            <span className="match-icon">
+                              <Icon name="building" size={18} />
+                            </span>
+                            <Badge>{get(p, 'Listing status')}</Badge>
+                          </div>
+                          <h4>{get(p, 'Listing title')}</h4>
+                          <div className="match-where">
+                            <Icon name="pin" size={14} />
+                            {get(p, 'Community')}
+                          </div>
+                          <div className="match-foot">
+                            <strong>{AED(get(p, 'Price / annual rent AED'))}</strong>
+                            <button
+                              onClick={() => {
+                                close();
+                                add('Shortlist', {
+                                  client_id: get(client, 'Client ID'),
+                                  property_id: get(p, 'Property ID'),
+                                  date_sent: today(),
+                                  client_response: 'Pending',
+                                });
+                              }}
+                            >
+                              Shortlist <Icon name="plus" size={14} />
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    />
+                  ) : (
+                    <Empty
+                      title="No exact matches found"
+                      detail="Adjust the client's budget or locations, or add more properties to your portfolio."
+                      icon="home"
+                    />
+                  )}
+                </section>
+              </>
+            )}
+            {user.permissions.schedule && (
+              <section className="panel">
+                <TitleSection
+                  heading="Relationship timeline"
+                  caption="Recent calls, tasks and scheduled viewings"
+                />
+                <div className="timeline">
+                  {timeline.map((item, i) => (
+                    <div className="timeline-item" key={i}>
+                      <span className="timeline-dot">
+                        <Icon name={item.icon} size={15} />
+                      </span>
+                      <div>
+                        <strong>{item.title}</strong>
+                        <p>{item.detail || '—'}</p>
                       </div>
-                      <h4>{get(p, 'Listing title')}</h4>
-                      <div className="match-where">
-                        <Icon name="pin" size={14} />
-                        {get(p, 'Community')}
-                      </div>
-                      <div className="match-foot">
-                        <strong>{AED(get(p, 'Price / annual rent AED'))}</strong>
-                        <button
-                          onClick={() =>
-                            add('Shortlist', {
-                              client_id: get(client, 'Client ID'),
-                              property_id: get(p, 'Property ID'),
-                              date_sent: today(),
-                              client_response: 'Pending',
-                            })
-                          }
-                        >
-                          Shortlist <Icon name="plus" size={14} />
-                        </button>
-                      </div>
+                      <time>{compactDate(item.date)}</time>
                     </div>
                   ))}
+                  {!timeline.length && <div className="mini-quiet">No activity yet.</div>}
                 </div>
-              ) : (
-                <Empty
-                  title="No exact matches found"
-                  detail="Adjust the client's budget or locations, or add more properties to your portfolio."
-                  icon="home"
-                />
-              )}
-            </section>
-            <section className="panel">
-              <TitleSection
-                heading="Relationship timeline"
-                caption="Recent calls, tasks and scheduled viewings"
-              />
-              <div className="timeline">
-                {timeline.map((item, i) => (
-                  <div className="timeline-item" key={i}>
-                    <span className="timeline-dot">
-                      <Icon name={item.icon} size={15} />
-                    </span>
-                    <div>
-                      <strong>{item.title}</strong>
-                      <p>{item.detail || '—'}</p>
-                    </div>
-                    <time>{compactDate(item.date)}</time>
-                  </div>
-                ))}
-                {!timeline.length && <div className="mini-quiet">No activity yet.</div>}
-              </div>
-            </section>
+              </section>
+            )}
           </>
         ) : (
           <Empty
@@ -168,6 +236,17 @@ function ClientDeskPage() {
           />
         )}
       </div>
+      {messageChannel && client && (
+        <MessagePreviewDialog
+          channel={messageChannel}
+          recipient={{
+            name: client.full_name || 'Client',
+            phone: client.phone,
+            email: client.email,
+          }}
+          onClose={() => setMessageChannel(null)}
+        />
+      )}
     </div>
   );
 }

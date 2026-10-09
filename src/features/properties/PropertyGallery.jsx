@@ -2,6 +2,7 @@ import { mediaPhotos } from '../../lib/media.js';
 import { get } from '../../lib/records.js';
 import { Icon } from '../../components/ui/Icon.jsx';
 import React from 'react';
+import { OverflowList } from '../../components/ui/OverflowList.jsx';
 
 function PropertyGallery({ record, onEdit }) {
   const photos = mediaPhotos(record);
@@ -38,19 +39,23 @@ function PropertyGallery({ record, onEdit }) {
         </div>
       )}
       {photos.length > 1 && (
-        <div className="media-photo-thumbs">
-          {photos.slice(1).map((p, i) => (
+        <OverflowList
+          mode="scroll"
+          className="photo-strip"
+          items={photos.slice(1)}
+          label="Property photo thumbnails"
+          listClassName="media-photo-thumbs"
+          renderItem={(p, i) => (
             <a
               href={p.src}
               target="_blank"
               rel="noopener noreferrer"
-              key={i}
               title={`Open property photo ${i + 2}`}
             >
               <img src={p.src} alt={`Property photo ${i + 2}`} />
             </a>
-          ))}
-        </div>
+          )}
+        />
       )}
     </div>
   );

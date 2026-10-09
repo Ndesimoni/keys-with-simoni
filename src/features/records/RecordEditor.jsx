@@ -193,9 +193,8 @@ function RecordEditor({ drawer, data, onClose, onSave }) {
               )}
               {currentSection.id === 'schedule' && (
                 <p className="form-intro">
-                  Times use Dubai time (UTC+4). Date-only follow-ups appear as all-day reminders.
-                  Enable sync to add this activity to your connected calendar. Invitations are sent
-                  only when you choose Yes.
+                  Times use Dubai time (UTC+4). Schedule details are saved with this CRM record.
+                  Leave the start time blank for a date-only follow-up.
                 </p>
               )}
               <section className="form-section" aria-labelledby={stepTitleId}>

@@ -1,0 +1,56 @@
+:root[data-theme='dark'] .desk-client small,
+:root[data-theme='dark'] .client-mini small,
+:root[data-theme='dark'] .property-content p,
+:root[data-theme='dark'] .metric-foot,
+:root[data-theme='dark'] .field label,
+:root[data-theme='dark'] .detail-field span {
+  color: #9dad9f;
+}
+:root[data-theme='dark'] .bar-track,
+:root[data-theme='dark'] .tier-track,
+:root[data-theme='dark'] .goal-track {
+  background: #2b3f33;
+}
+:root[data-theme='dark'] .goal-top input {
+  background: #23382d;
+}
+:root[data-theme='dark'] .inventory-field > span {
+  color: #afc0b0;
+}
+:root[data-theme='dark'] .property-card-meta span {
+  background: #2d4537;
+  color: #c4ddc6;
+}
+:root[data-theme='dark'] .property-card-meta span + span {
+  background: #483f2e;
+  color: #dfc08d;
+}
+:root[data-theme='dark'] .purpose-pill b {
+  background: #2f4437;
+  color: #bbd1bf;
+}
+:root[data-theme='dark'] .purpose-pill.selected {
+  background: #9a7d54;
+  color: #131f18;
+  border-color: #9a7d54;
+}
+:root[data-theme='dark'] .purpose-pill.selected svg {
+  color: #192c1e;
+}
+:root[data-theme='dark'] .purpose-pill.selected b {
+  background: #ffffff40;
+  color: #121c15;
+}
+:root[data-theme='dark'] .property-photo-status .badge {
+  box-shadow: 0 2px 9px #071b1860;
+}
+:root[data-theme='dark'] .inventory-filters,
+:root[data-theme='dark'] .inventory-empty {
+  box-shadow: 0 5px 24px #07181055;
+}
+:root[data-theme='dark'] .inventory-results-bar span {
+  color: #9ead9e;
+}
+:root[data-theme='dark'] .inventory-reset {
+  color: #e0bc83;
+}

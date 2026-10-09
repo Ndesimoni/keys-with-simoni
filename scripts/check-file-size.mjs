@@ -1,0 +1,89 @@
+import { lstat, readdir, readFile } from 'node:fs/promises';
+import { basename, dirname, extname, relative, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const limit = 150;
+const extensions = new Set([
+  '.js',
+  '.jsx',
+  '.mjs',
+  '.cjs',
+  '.ts',
+  '.tsx',
+  '.css',
+  '.scss',
+  '.rs',
+  '.py',
+  '.sh',
+  '.sql',
+  '.html',
+  '.json',
+  '.toml',
+  '.yaml',
+  '.yml',
+]);
+const generatedDirectories = new Set([
+  '.git',
+  'node_modules',
+  'dist',
+  'coverage',
+  'playwright-report',
+  'test-results',
+  'target',
+  '.vite',
+  '__pycache__',
+]);
+const inactivePaths = new Set(['legacy', 'backend/data']);
+const generatedFiles = new Set(['package-lock.json', 'Cargo.lock']);
+const requestedPaths = process.argv.slice(2);
+const targets = requestedPaths.length ? requestedPaths.map((path) => resolve(path)) : [projectRoot];
+
+async function collectFiles(path) {
+  const info = await lstat(path);
+  if (info.isSymbolicLink()) return [];
+  if (info.isDirectory()) {
+    const entries = await readdir(path, { withFileTypes: true });
+    const children = entries
+      .filter((entry) => !generatedDirectories.has(entry.name))
+      .map((entry) => resolve(path, entry.name))
+      .filter((child) => !inactivePaths.has(relative(projectRoot, child).split(sep).join('/')));
+    return (await Promise.all(children.map(collectFiles))).flat();
+  }
+  if (!extensions.has(extname(path)) || generatedFiles.has(basename(path))) {
+    return [];
+  }
+  return [path];
+}
+
+function countLines(source) {
+  const normalized = source.replace(/\r\n?/g, '\n');
+  if (!normalized.length) return 0;
+  return normalized.split('\n').length - Number(normalized.endsWith('\n'));
+}
+
+try {
+  const files = [...new Set((await Promise.all(targets.map(collectFiles))).flat())];
+  const measured = await Promise.all(
+    files.map(async (path) => ({
+      path: relative(projectRoot, path),
+      lines: countLines(await readFile(path, 'utf8')),
+    })),
+  );
+  const violations = measured
+    .filter(({ lines }) => lines > limit)
+    .sort((a, b) => b.lines - a.lines || a.path.localeCompare(b.path));
+  console.log(
+    `Checked ${files.length} hand-written code/configuration files (limit: ${limit} lines).`,
+  );
+  for (const { path, lines } of violations) console.error(`${path}: ${lines} lines`);
+  if (violations.length) {
+    console.error(`FAILED: ${violations.length} files exceed ${limit} lines.`);
+    process.exitCode = 1;
+  } else {
+    console.log('PASS: every checked file meets the line limit.');
+  }
+} catch (error) {
+  console.error(`Cannot check file sizes: ${error.message}`);
+  process.exitCode = 1;
+}

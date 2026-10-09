@@ -1,5 +1,7 @@
 # Google Calendar integration
 
+**Deferred:** Calendar is removed from the active frontend while UI development continues. Its old URL redirects to the dashboard; connection/sync controls and background API requests are disabled. Follow-ups and viewings retain local scheduling and existing metadata. The following describes the retained integration for a future phase and is not the current frontend setup.
+
 The Calendar screen at `/#/calendar` combines follow-ups, property viewings, client meetings and calls. Its month view and activity list work without a Google account. Appointments use Dubai time (`Asia/Dubai`, UTC+4); follow-ups with only a due date become all-day events.
 
 ## Connect your account

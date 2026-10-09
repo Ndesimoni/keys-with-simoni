@@ -1,0 +1,109 @@
+:root[data-theme] .inventory-page {
+  gap: 16px;
+}
+:root[data-theme] .property-purpose-bar {
+  gap: 8px;
+}
+:root[data-theme] .purpose-pill {
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  color: var(--muted);
+  background: var(--panel);
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: none;
+}
+:root[data-theme] .purpose-pill:hover {
+  background: var(--hover);
+  border-color: var(--muted);
+  transform: none;
+}
+:root[data-theme] .purpose-pill.selected {
+  color: var(--on-primary);
+  background: var(--primary);
+  border-color: var(--primary);
+  font-weight: 600;
+}
+:root[data-theme] .purpose-pill.selected svg {
+  color: var(--on-primary);
+}
+:root[data-theme] .purpose-pill.selected b {
+  color: inherit;
+  background: #ffffff20;
+}
+:root[data-theme] .inventory-filters {
+  padding: 16px;
+  border-radius: 10px;
+}
+:root[data-theme] .inventory-filter-heading {
+  margin-bottom: 0;
+  padding: 0;
+  gap: 12px;
+}
+.property-filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 13px;
+}
+.property-filter-toggle > span {
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 500;
+}
+.property-filter-toggle[aria-expanded='true'] .filter-toggle-chevron {
+  transform: rotate(180deg);
+}
+:root[data-theme] .inventory-filter-grid {
+  margin-top: 16px;
+  gap: 12px;
+}
+:root[data-theme] .inventory-field > span {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+:root[data-theme] .inventory-results-bar {
+  gap: 16px;
+  padding: 0;
+}
+:root[data-theme] .inventory-results-bar strong {
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+:root[data-theme] .inventory-results-bar span {
+  color: var(--muted);
+  font-size: 12px;
+}
+:root[data-theme] .modern-property-card {
+  background: var(--panel);
+  border-color: var(--line);
+  box-shadow: var(--shadow);
+  border-radius: 14px;
+  height: 100%;
+}
+:root[data-theme] .modern-property-card:hover {
+  transform: none;
+  border-color: var(--muted);
+  box-shadow: 0 8px 24px #00000012;
+}
+:root[data-theme] .property-content h3 {
+  font-size: 17px;
+  line-height: 1.4;
+}
+:root[data-theme] .property-bottom strong {
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 600;
+}
+:root[data-theme] .inventory-collection {
+  scroll-margin-top: 90px;
+}

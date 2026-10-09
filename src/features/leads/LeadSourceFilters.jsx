@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Icon } from '../../components/ui/Icon.jsx';
 import { N } from '../../lib/format.js';
+import { VISIBLE_OPTION_LIMIT } from '../../lib/overflow.js';
 
-const SOURCE_FILTER_LIMIT = 5;
+const SOURCE_FILTER_LIMIT = VISIBLE_OPTION_LIMIT;
 
 export function LeadSourceFilters({ sources, selectedSource, total, onChange }) {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,7 +11,7 @@ export function LeadSourceFilters({ sources, selectedSource, total, onChange }) 
   const anchorRef = useRef(null);
   const moreRef = useRef(null);
   const menuRef = useRef(null);
-  // All sources occupies one of the five visible filter slots.
+  // All sources occupies one of the six compact filter slots.
   const visibleSources = sources.slice(0, SOURCE_FILTER_LIMIT - 1);
   const selected = sources.find(
     (item) => item.label.toLowerCase() === selectedSource.toLowerCase(),
@@ -100,19 +101,29 @@ export function LeadSourceFilters({ sources, selectedSource, total, onChange }) 
               ref={menuRef}
               className="lead-source-menu"
               role="group"
-              aria-label="Additional lead sources"
+              aria-label="All lead sources"
             >
               <div className="lead-source-menu-heading">
-                <strong>Other sources</strong>
+                <strong>All lead sources</strong>
                 <button
                   className="lead-source-menu-close"
-                  aria-label="Close extra source filters"
+                  aria-label="Close source filters"
                   onClick={() => closeMenu(true)}
                 >
                   <Icon name="close" size={16} />
                 </button>
               </div>
-              {extraSources.map((item) => (
+              <button
+                className="lead-source-choice"
+                aria-pressed={!selectedSource}
+                onClick={() => {
+                  onChange('');
+                  closeMenu(true);
+                }}
+              >
+                All sources <span>{N(total)}</span>
+              </button>
+              {sources.map((item) => (
                 <button
                   className="lead-source-choice"
                   key={item.label}

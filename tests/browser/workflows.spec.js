@@ -27,7 +27,7 @@ test('all 11 record modules create, edit, reload and delete through centered ove
       .poll(() =>
         page.evaluate(
           ({ module, key, id }) =>
-            JSON.parse(localStorage.getItem('kws-crm-v1')).data[module].some(
+            JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah')).data[module].some(
               (row) => row[key] === id,
             ),
           { module, key: fields[0].key, id },
@@ -63,7 +63,7 @@ test('all 11 record modules create, edit, reload and delete through centered ove
       .poll(() =>
         page.evaluate(
           ({ module, key, id }) =>
-            JSON.parse(localStorage.getItem('kws-crm-v1')).data[module].some(
+            JSON.parse(localStorage.getItem('kws-crm-v1:workspace:aidah')).data[module].some(
               (row) => row[key] === id,
             ),
           { module, key: fields[0].key, id: id + '-EDIT' },
@@ -99,12 +99,13 @@ test('failed persistence shows a recovery banner and retry saves the same in-mem
   page.on('dialog', (dialog) => dialog.accept());
   await page.goto('/#/clients');
   await expect
-    .poll(() => page.evaluate(() => Boolean(localStorage.getItem('kws-crm-v1'))))
+    .poll(() => page.evaluate(() => Boolean(localStorage.getItem('kws-crm-v1:workspace:aidah'))))
     .toBe(true);
   await page.evaluate(() => {
     window.originalStorageWrite = Storage.prototype.setItem;
     Storage.prototype.setItem = function (key, value) {
-      if (key === 'kws-crm-v1') throw new DOMException('Simulated failure', 'QuotaExceededError');
+      if (key === 'kws-crm-v1:workspace:aidah')
+        throw new DOMException('Simulated failure', 'QuotaExceededError');
       return window.originalStorageWrite.call(this, key, value);
     };
   });

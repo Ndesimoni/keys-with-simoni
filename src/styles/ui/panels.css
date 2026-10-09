@@ -1,0 +1,36 @@
+.panel {
+  background: #fff;
+  border: 1px solid #e9eeeb;
+  border-radius: 13px;
+  padding: 22px 23px;
+  min-width: 0;
+  box-shadow: var(--shadow);
+}
+.section-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 23px;
+}
+.text-action,
+.panel-link {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  color: #af8d60;
+  background: transparent;
+  border: 0;
+  font-weight: 800;
+  font-size: 10px;
+  white-space: nowrap;
+}
+.text-action:hover,
+.panel-link:hover {
+  color: #7f6242;
+}
+.split-main {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 16px;
+}

@@ -1,0 +1,106 @@
+.property-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.property-card {
+  text-align: left;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 13px;
+  overflow: hidden;
+  min-width: 0;
+  transition: 0.18s;
+}
+.property-card:hover {
+  box-shadow: 0 9px 27px #213b2d16;
+  transform: translateY(-2px);
+}
+.property-photo {
+  height: 155px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(130deg, #758e85, #435f52);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.property-photo.variant-1 {
+  background: linear-gradient(120deg, #ada991, #5f8278);
+}
+.property-photo.variant-2 {
+  background: linear-gradient(120deg, #818d92, #445d69);
+}
+.property-photo.variant-3 {
+  background: linear-gradient(120deg, #9e9b91, #786f68);
+}
+.property-photo .badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: #ffffffde;
+}
+.building-graphic {
+  height: 120px;
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+  opacity: 0.55;
+}
+.building-graphic span {
+  width: 58px;
+  height: 104px;
+  background: repeating-linear-gradient(0deg, #d6dec7 0 6px, #a4b8ae 7px 12px);
+  box-shadow: 4px 4px 15px #233e3a40;
+}
+.building-graphic span:nth-child(2) {
+  height: 137px;
+  width: 79px;
+}
+.building-graphic span:nth-child(3) {
+  height: 87px;
+  width: 67px;
+}
+.property-content {
+  padding: 18px;
+}
+.property-category {
+  color: #b59365;
+  font-weight: 800;
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+.property-content h3 {
+  font-size: 14px;
+  color: #2d473a;
+  margin: 0 0 11px;
+}
+.property-content p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #9ca8a0;
+  font-size: 10px;
+  margin: 0 0 16px;
+}
+.property-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #edf0ed;
+  padding-top: 13px;
+}
+.property-bottom strong {
+  color: #31493e;
+  font-size: 13px;
+}
+.property-bottom strong small {
+  font-size: 9px;
+  color: #8b9990;
+}
+.property-bottom > span {
+  font-size: 10px;
+  color: #8c9b91;
+}

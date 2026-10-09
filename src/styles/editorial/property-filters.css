@@ -1,0 +1,73 @@
+.property-purpose-bar {
+  gap: 10px;
+}
+.purpose-pill {
+  padding: 12px;
+  gap: 8px;
+  font-size: 12px;
+  min-height: 56px;
+  font-weight: 700;
+  color: #375246;
+  border-color: var(--line);
+}
+.purpose-pill b {
+  font-size: 11px;
+  min-width: 23px;
+  border-radius: 7px;
+}
+.purpose-pill.selected {
+  background: #204f39;
+  color: #fff;
+  border-color: #204f39;
+}
+.purpose-pill.selected b {
+  background: #ffffff25;
+  color: #fff;
+}
+.inventory-filters {
+  border-color: var(--line);
+  padding: 22px;
+}
+.inventory-filter-heading {
+  margin-bottom: 16px;
+}
+.inventory-filter-heading strong {
+  font-size: 14px;
+  color: var(--ink);
+}
+.inventory-filter-heading span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.inventory-field > span {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #4e6759;
+}
+.inventory-field input,
+.inventory-field select {
+  min-height: 42px;
+  height: auto;
+  padding: 10px 11px;
+  font-size: 12.5px;
+  color: #2a4437;
+  background: #fbfdfb;
+  border-color: #dce5df;
+}
+.inventory-results-bar strong {
+  font-size: 16px;
+  color: var(--ink);
+}
+.inventory-results-bar span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.search-small {
+  min-height: 40px;
+  background: #fff;
+  border-color: var(--line);
+}
+.search-small input {
+  font-size: 12px;
+  color: var(--ink);
+}
